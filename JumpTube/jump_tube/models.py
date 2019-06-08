@@ -13,6 +13,7 @@ class Video(models.Model):
     description                 = models.TextField( blank=True, null=True,max_length = MAX_TEXT)
     created_at                  = models.DateTimeField(auto_now_add=True)
     updated_at                  = models.DateTimeField(auto_now=True)
+    
 
     def __str__(self):
         return str(self.id) + ' ' + self.name
@@ -28,3 +29,5 @@ class SubTitle(models.Model):
         return str(self.index) + ' ' + self.text
 
 
+    def get_absolute_url(self):
+        return self.video.url + '&t=' + str(int(self.stating_in_seconds)) + 's'

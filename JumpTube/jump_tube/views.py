@@ -18,3 +18,4 @@ def home(request):
             'year':datetime.now().year,
         }
     )
+
