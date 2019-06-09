@@ -13,6 +13,8 @@ from jump_tube import views
 
 urlpatterns = [
     path('', views.home, name='home'),
+#    path('play_video/', views.play_video, name='play_video'),
+
     path('contact/', app_views.contact, name='contact'),
     path('about/', app_views.about, name='about'),
     path('login/',

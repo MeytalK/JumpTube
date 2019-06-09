@@ -6,6 +6,7 @@ Definition of views.
 from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpRequest
+from .models import SubTitle
 
 def home(request):
     """Renders the home page."""
@@ -14,8 +15,9 @@ def home(request):
         request,
         'jump_tube/index.html',
         {
-            'title':'Home Page',
-            'year':datetime.now().year,
+            'video_id':'QqAY0USF9zk',
+            'subs':SubTitle.objects.all(),
         }
     )
+
 

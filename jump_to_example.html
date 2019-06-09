@@ -1,35 +1,11 @@
-﻿<!doctype html>
-<html lang="en" dir="rtl">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!DOCTYPE html>
+<html>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>JumpTube</title>
-  </head>
   <body>
-      <div class="row">
-                 
-<div id="scroll" class="col-sm-6 col-md-3" >
-               {% for s in subs %}
+    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+    <div id="player"></div>
 
-               <button class="new btn btn-success" onclick="player.seekTo({{s.stating_in_seconds}});player.playVideo();">{{s.text}}</button>
-    <br >
-               {% endfor %}
-
-           </div>
-          <div id="player_col" class="col-sm-6 col-md-9" >
-
-       <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-         <div class="embed-responsive embed-responsive-16by9">
-           <div class="embed-responsive-item" id="player"></div>
-
-           </div>
-         </div>
-   
     <script>
       // 2. This code loads the IFrame Player API code asynchronously.
       var tag = document.createElement('script');
@@ -45,7 +21,7 @@
         player = new YT.Player('player', {
           height: '390',
           width: '640',
-          videoId: '{{video_id}}',
+          videoId: 'QqAY0USF9zk',
           events: {
             'onReady': onPlayerReady
           }
@@ -61,7 +37,7 @@
 
     </script>
 
-          </div>
+
 
 
 <form id="myForm" action="/action_page.php">
