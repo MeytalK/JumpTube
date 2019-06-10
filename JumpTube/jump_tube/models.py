@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.urls import reverse
 
 # Create your models here.
 MAX_TEXT = 2000
@@ -17,7 +18,12 @@ class Video(models.Model):
 
     def __str__(self):
         return str(self.id) + ' ' + self.name
+    
+    def get_absolute_url(self):
+        return (
+            reverse('video_play', kwargs={'pk': str(self.id)}) )
 
+        return self.video.url + '&t=' + str(int(self.stating_in_seconds)) + 's'
 
 class SubTitle(models.Model):
     video                       = models.ForeignKey(Video, on_delete=models.CASCADE)

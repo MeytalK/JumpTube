@@ -43,6 +43,7 @@
     <Compile Include="jump_tube\migrations\__init__.py" />
     <Compile Include="jump_tube\models.py" />
     <Compile Include="jump_tube\tests.py" />
+    <Compile Include="jump_tube\urls.py" />
     <Compile Include="jump_tube\views.py" />
     <Compile Include="jump_tube\__init__.py" />
     <Compile Include="manage.py" />

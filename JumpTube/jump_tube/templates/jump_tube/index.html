@@ -9,8 +9,41 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <title>JumpTube</title>
-  </head>
+   </head>
   <body>
+           <style>
+div.relative {
+  position: relative;
+  width: 800px;
+  height: 400px;
+  border: 3px solid #73AD21;
+} 
+
+div.absolute {
+  position: absolute;
+  top: 80px;
+  right: 0;
+  width: 200px;
+  height: 100px;
+  border: 3px solid #73AD21;
+}
+div.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background-color: yellow;
+  padding: 50px;
+  font-size: 20px;
+}
+
+div.fixed {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+}
+</style>
+
       <div class="row">
                  
 <div id="scroll" class="col-sm-6 col-md-3" >
@@ -22,13 +55,17 @@
 
            </div>
           <div id="player_col" class="col-sm-6 col-md-9" >
-
+  
+              
        <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+            
          <div class="embed-responsive embed-responsive-16by9">
+             
            <div class="embed-responsive-item" id="player"></div>
-
+             
            </div>
-         </div>
+        
+
    
     <script>
       // 2. This code loads the IFrame Player API code asynchronously.
@@ -85,6 +122,7 @@ function myFunction() {
 
 <button onclick="player.seekTo(75);player.playVideo();">וכאן כתוב לנו שאנחנו חייבים שיהיה לנו וואטסאפ בטלפון</button>
 
-
+          </div>
+          
   </body>
 </html>
