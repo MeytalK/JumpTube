@@ -1,0 +1,20 @@
+#ignore thumbnails created by windows
+Thumbs.db
+*.mp4
+*.MP4
+*.exe
+#ignore by django
+*.sqlite3
+*.log
+*.pot
+#ignore thumbnails created by windows
+Thumbs.db
+#ignore python
+*.pyc
+.project
+.pydevproject
+desktop.ini
+local_settings.py
+
+
+
