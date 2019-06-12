@@ -9,9 +9,9 @@ MAX_TEXT = 2000
 class Video(models.Model):
 #    owner                       = models.ForeignKey(User, on_delete=models.CASCADE)
     url                         = models.URLField( default=None, blank=True, null=True)                                                   
-    offset_seconds              = models.FloatField(default=0.0)
     name                        = models.TextField(default = u'', blank=True, null=True, max_length = MAX_TEXT)
     description                 = models.TextField( blank=True, null=True,max_length = MAX_TEXT)
+    from_file                   = models.FileField(default = None, blank=True, null=True,upload_to='uploads/%Y/%m/%d/', max_length = 100000000000)
     created_at                  = models.DateTimeField(auto_now_add=True)
     updated_at                  = models.DateTimeField(auto_now=True)
     

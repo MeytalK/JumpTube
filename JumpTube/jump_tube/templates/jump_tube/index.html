@@ -43,10 +43,12 @@ div.fixed {
   z-index: 1030;
 }
 </style>
-
+<a href="/admin/jump_tube/video/" class="addlink"> </a>
       <div class="row">
                  
 <div id="scroll" class="col-sm-6 col-md-3" >
+                	<a class="new btn btn-info" href="/admin/jump_tube/video/" target="_blank">See all videos</a>   
+<br>
                {% for s in subs %}
 
                <button class="new btn btn-success" onclick="player.seekTo({{s.stating_in_seconds}});player.playVideo();">{{s.text}}</button>
@@ -65,9 +67,9 @@ div.fixed {
              
            </div>
         
-
+              </div>
    
-    <script>
+    <script type="text/javascript">
       // 2. This code loads the IFrame Player API code asynchronously.
       var tag = document.createElement('script');
 
@@ -91,36 +93,51 @@ div.fixed {
 
       // 4. The API will call this function when the video player is ready.
       function onPlayerReady(event) {
-	    event.target.seekTo(133.124);
+	 //   event.target.seekTo(133.124);
         event.target.playVideo();
       }
 	  
 
     </script>
 
-          </div>
+          
 
 
 <form id="myForm" action="/action_page.php">
-  Jump To Second: <input type="text" name="fname" value="0"><br>
+  Second: <input type="text" name="fname" value="0"><br>
+  yaw: <input type="text" name="fname" value="0"><br>
+  pitch: <input type="text" name="fname" value="0"><br>
+  roll: <input type="text" name="fname" value="0"><br>
+  fov: <input type="text" name="fname" value="0"><br>
 </form> 
 
 <button onclick="myFunction()">Jump</button>
 
-<p id="demo"></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
 
-<script>
-function myFunction() {
-  var x = document.getElementById("myForm").elements.item(0).value;
-//  document.getElementById("demo").innerHTML = parseInt(x);
-  player.seekTo(x);
-  player.playVideo();
-}
+<script type="text/javascript">
+    
+    function myFunction() {
+        var x = parseFloat(document.getElementById("myForm").elements.item(0).value);
+        //  document.getElementById("demo").innerHTML = parseInt(x);
+        var sphericalProperties = {};
+        sphericalProperties['yaw'  ] = parseFloat(document.getElementById("myForm").elements.item(1).value);
+        sphericalProperties['pitch'] = parseFloat(document.getElementById("myForm").elements.item(2).value);
+        sphericalProperties['roll' ] = parseFloat(document.getElementById("myForm").elements.item(3).value);
+        sphericalProperties['fov'  ] = parseFloat(document.getElementById("myForm").elements.item(4).value);
+        player.seekTo(x);
+        player.playVideo();
+        player.setSphericalProperties(sphericalProperties);
+    }
 </script>
 
+        
 
-
-<button onclick="player.seekTo(75);player.playVideo();">וכאן כתוב לנו שאנחנו חייבים שיהיה לנו וואטסאפ בטלפון</button>
+{#<button onclick="player.seekTo(75);player.playVideo();">וכאן כתוב לנו שאנחנו חייבים שיהיה לנו וואטסאפ בטלפון</button>#}
 
           </div>
           

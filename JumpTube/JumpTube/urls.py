@@ -9,7 +9,8 @@ from django.contrib.auth.views import LoginView, LogoutView
 from app import forms
 from app import views as app_views
 from jump_tube import views
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
    # path('', include(('jump_tube.urls', "jump_tube"), "jump_tube_urls")),
@@ -32,4 +33,5 @@ urlpatterns = [
          name='login'),
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
     path('admin/', admin.site.urls),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

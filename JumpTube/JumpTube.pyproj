@@ -21,6 +21,8 @@
     <DjangoSettingsModule>JumpTube.settings</DjangoSettingsModule>
     <OutputPath>.</OutputPath>
     <SuppressCollectPythonCloudServiceFiles>true</SuppressCollectPythonCloudServiceFiles>
+    <PythonDebugWebServerCommandArguments>runserver</PythonDebugWebServerCommandArguments>
+    <PythonRunWebServerCommandArguments>runserver</PythonRunWebServerCommandArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -94,6 +96,8 @@
     <Content Include="jump_tube\static\jump_tube\bootstrap-4.3.1-dist\js\bootstrap.js.map" />
     <Content Include="jump_tube\static\jump_tube\bootstrap-4.3.1-dist\js\bootstrap.min.js" />
     <Content Include="jump_tube\static\jump_tube\bootstrap-4.3.1-dist\js\bootstrap.min.js.map" />
+    <Content Include="jump_tube\templates\jump_tube\tmp.html" />
+    <Content Include="jump_tube\templates\jump_tube\video_view_mp4.html" />
     <Content Include="jump_tube\templates\jump_tube\index.html" />
     <Content Include="jump_tube\templates\jump_tube\layout.html" />
     <Content Include="requirements.txt" />

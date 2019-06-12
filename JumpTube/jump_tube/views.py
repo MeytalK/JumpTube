@@ -17,7 +17,7 @@ def home(request):
         'jump_tube/index.html',
         {
             'video_id':'QqAY0USF9zk',
-            'subs':SubTitle.objects.all(),
+            'subs':Video.objects.first().subtitle_set.all().order_by('stating_in_seconds'),
         }
     )
 
@@ -26,10 +26,19 @@ def video_play(request, pk):
     try:
         video = Video.objects.get(id=int(pk))
     except Video.DoesNotExist:
-        return "not found"
+        video = Video.objects.first()
 
-    """Renders the home page."""
-    assert isinstance(request, HttpRequest)
+    if video.from_file:
+        return render(
+            request,
+            'jump_tube/video_view_mp4.html',
+           # 'jump_tube/tmp.html',
+            {
+                'video_id':video.from_file.url,
+                'subs':video.subtitle_set.all().order_by('stating_in_seconds'),
+            }
+        )
+
     return render(
         request,
         'jump_tube/index.html',
