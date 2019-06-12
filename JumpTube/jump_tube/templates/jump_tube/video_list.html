@@ -1,0 +1,25 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<h2>Videos</h2>
+<br/>
+
+{% if video_list %}
+<table class="table table-hover">
+    <tbody>
+        {% for video in video_list %}
+        <tr>
+            <td>
+                <a href="{% url 'app:detail' poll.id %}">{{video.name}}</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No videos available.</p>
+
+{% endif %}
+
+{% endblock %}

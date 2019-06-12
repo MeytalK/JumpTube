@@ -8,7 +8,7 @@ from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
 from app import forms
 from app import views as app_views
-from jump_tube import views
+from jump_tube import views , models
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -16,6 +16,13 @@ urlpatterns = [
    # path('', include(('jump_tube.urls', "jump_tube"), "jump_tube_urls")),
     path('', views.home, name='home'),
     path('video_play/<int:pk>/', views.video_play, name='video_play'),
+    path('video_init_from_srt/<int:pk>/', views.video_init_from_srt, name='video_init_from_srt'),
+    path('video_list/',
+        views.VideoListView.as_view(
+        queryset=models.Video.objects.all(),
+        context_object_name='video_list',
+        template_name='jump_tube/video_list.html',),
+        name='video_list'),
 
     path('contact/', app_views.contact, name='contact'),
     path('about/', app_views.about, name='about'),

@@ -5,9 +5,12 @@ Definition of views.
 
 from datetime import datetime
 from django.shortcuts import render
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponseRedirect
+from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView
 from .models import SubTitle, Video
+from .control import init_subtitles_from_srt_file
+from JumpTube import settings
 
 def home(request):
     """Renders the home page."""
@@ -47,6 +50,18 @@ def video_play(request, pk):
             'subs':video.subtitle_set.all().order_by('stating_in_seconds'),
         }
     )
+
+
+def video_init_from_srt(request, pk):
+    try:
+        video = Video.objects.get(id=int(pk))
+    except Video.DoesNotExist:
+        video = Video.objects.first()
+
+    init_subtitles_from_srt_file( settings.MEDIA_ROOT  + '/' + video.srt_file.name , video.id)
+
+    return HttpResponseRedirect(reverse('video_play', args=(video.id,)))
+  
 
 
 class VideoListView(ListView):

@@ -12,6 +12,7 @@ class Video(models.Model):
     name                        = models.TextField(default = u'', blank=True, null=True, max_length = MAX_TEXT)
     description                 = models.TextField( blank=True, null=True,max_length = MAX_TEXT)
     from_file                   = models.FileField(default = None, blank=True, null=True,upload_to='uploads/%Y/%m/%d/', max_length = 100000000000)
+    srt_file                    = models.FileField(default = None, blank=True, null=True,upload_to='uploads/%Y/%m/%d/', max_length = 100000000)
     created_at                  = models.DateTimeField(auto_now_add=True)
     updated_at                  = models.DateTimeField(auto_now=True)
     

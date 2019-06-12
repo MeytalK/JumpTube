@@ -42,6 +42,7 @@
     <Compile Include="jump_tube\admin.py" />
     <Compile Include="jump_tube\apps.py" />
     <Compile Include="jump_tube\control.py" />
+    <Compile Include="jump_tube\forms.py" />
     <Compile Include="jump_tube\migrations\__init__.py" />
     <Compile Include="jump_tube\models.py" />
     <Compile Include="jump_tube\tests.py" />
@@ -97,6 +98,7 @@
     <Content Include="jump_tube\static\jump_tube\bootstrap-4.3.1-dist\js\bootstrap.min.js" />
     <Content Include="jump_tube\static\jump_tube\bootstrap-4.3.1-dist\js\bootstrap.min.js.map" />
     <Content Include="jump_tube\templates\jump_tube\tmp.html" />
+    <Content Include="jump_tube\templates\jump_tube\video_list.html" />
     <Content Include="jump_tube\templates\jump_tube\video_view_mp4.html" />
     <Content Include="jump_tube\templates\jump_tube\index.html" />
     <Content Include="jump_tube\templates\jump_tube\layout.html" />
