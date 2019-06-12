@@ -42,6 +42,7 @@ div.fixed {
   right: 0;
   z-index: 1030;
 }
+p {text-align:left;}
 </style>
 <a href="/admin/jump_tube/video/" class="addlink"> </a>
       <div class="row">
@@ -49,12 +50,14 @@ div.fixed {
 <div id="scroll" class="col-sm-6 col-md-3" >
                 	<a class="new btn btn-info" href="/admin/jump_tube/video/" target="_blank">See all videos</a>   
 <br>
+    <p>
+    
                {% for s in subs %}
 
                <button class="new btn btn-success" onclick="player.seekTo({{s.stating_in_seconds}});player.playVideo();">{{s.text}}</button>
     <br >
                {% endfor %}
-
+        </p>
            </div>
           <div id="player_col" class="col-sm-6 col-md-9" >
   
@@ -79,6 +82,7 @@ div.fixed {
   roll: <input type="text" name="fname" value="0"><br>
   fov: <input type="text" name="fname" value="0"><br>
 </form> 
+<a class="new btn btn-success" href="/video_init_from_srt/{{ id }}/">Init subtitles</a>   
 
                     </div>
    

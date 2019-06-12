@@ -17,12 +17,13 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('video_play/<int:pk>/', views.video_play, name='video_play'),
     path('video_init_from_srt/<int:pk>/', views.video_init_from_srt, name='video_init_from_srt'),
-    path('video_list/',
-        views.VideoListView.as_view(
-        queryset=models.Video.objects.all(),
-        context_object_name='video_list',
-        template_name='jump_tube/video_list.html',),
-        name='video_list'),
+    path('video_init_from_youtube/<int:pk>/', views.video_init_from_youtube, name='video_init_from_youtube'),
+    #path('video_list/',
+    #    views.VideoListView.as_view(
+    #    queryset=models.Video.objects.all(),
+    #    context_object_name='video_list',
+    #    template_name='jump_tube/video_list.html',),
+    #    name='video_list'),
 
     path('contact/', app_views.contact, name='contact'),
     path('about/', app_views.about, name='about'),

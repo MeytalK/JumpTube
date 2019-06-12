@@ -9,7 +9,7 @@ from django.http import HttpRequest, HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView
 from .models import SubTitle, Video
-from .control import init_subtitles_from_srt_file
+from .control import init_subtitles_from_srt_file, init_subtitles_from_youtube
 from JumpTube import settings
 
 def home(request):
@@ -48,6 +48,7 @@ def video_play(request, pk):
         {
             'video_id':video.url[len( 'https://www.youtube.com/watch?v='):],
             'subs':video.subtitle_set.all().order_by('stating_in_seconds'),
+            'id':video.id,
         }
     )
 
@@ -57,11 +58,25 @@ def video_init_from_srt(request, pk):
         video = Video.objects.get(id=int(pk))
     except Video.DoesNotExist:
         video = Video.objects.first()
+    video_id = None
 
-    init_subtitles_from_srt_file( settings.MEDIA_ROOT  + '/' + video.srt_file.name , video.id)
+    if video.srt_file:
+        video_id = init_subtitles_from_srt_file( settings.MEDIA_ROOT  + '/' + video.srt_file.name , video.id)
+    if None == video_id:
+        init_subtitles_from_youtube(video.id)
+        
 
     return HttpResponseRedirect(reverse('video_play', args=(video.id,)))
   
+def video_init_from_youtube(request, pk):
+    try:
+        video = Video.objects.get(id=int(pk))
+    except Video.DoesNotExist:
+        video = Video.objects.first()
+
+    init_subtitles_from_youtube(video.id)
+
+    return HttpResponseRedirect(reverse('video_play', args=(video.id,)))
 
 
 class VideoListView(ListView):

@@ -10,7 +10,7 @@ class Video(models.Model):
 #    owner                       = models.ForeignKey(User, on_delete=models.CASCADE)
     url                         = models.URLField( default=None, blank=True, null=True)                                                   
     name                        = models.TextField(default = u'', blank=True, null=True, max_length = MAX_TEXT)
-    description                 = models.TextField( blank=True, null=True,max_length = MAX_TEXT)
+    description                 = models.TextField( default = u'',blank=True, null=True,max_length = MAX_TEXT)
     from_file                   = models.FileField(default = None, blank=True, null=True,upload_to='uploads/%Y/%m/%d/', max_length = 100000000000)
     srt_file                    = models.FileField(default = None, blank=True, null=True,upload_to='uploads/%Y/%m/%d/', max_length = 100000000)
     created_at                  = models.DateTimeField(auto_now_add=True)
@@ -18,6 +18,10 @@ class Video(models.Model):
     
 
     def __str__(self):
+        if self.url:
+            if self.srt_file:
+                return str(self.id) + ' ' + self.name + ' ' + self.url + ' ' + self.srt_file.name 
+            return str(self.id) + ' ' + self.name + ' ' + self.url 
         return str(self.id) + ' ' + self.name
     
     def get_absolute_url(self):
