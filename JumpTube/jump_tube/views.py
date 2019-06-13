@@ -83,9 +83,10 @@ def video_init_from_youtube(request, pk):
 def jump(request):
     url_query  = request.GET.get('from_youtube')
     video = Video.objects.get_or_create( url = url_query)[0]
-    init_subtitles_from_youtube(video.id)
     
-    return HttpResponseRedirect(reverse('video_play', args=(video.id,)))
+    if init_subtitles_from_youtube(video.id):
+        return HttpResponseRedirect(reverse('video_play', args=(video.id,)))
+    return HttpResponseRedirect(url_query)
 
 class VideoListView(ListView):
     """Renders the home page, with a list of all videos."""
