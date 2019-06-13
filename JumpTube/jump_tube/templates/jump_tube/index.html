@@ -56,12 +56,13 @@ div.fixed {
 <div id="scroll" class="col-sm-6 col-md-3 overflow-auto1" >
                 	<a class="new btn btn-info" href="/admin/jump_tube/video/" target="_blank">See all videos</a>   
 <br>
+        <center>
                {% for s in subs %}
 
                <button class="new btn btn-success" onclick="player.seekTo({{s.stating_in_seconds}});player.playVideo();">{{s.text}}</button>
     <br >
                {% endfor %}
-
+        </center>
 </div>
 
 
