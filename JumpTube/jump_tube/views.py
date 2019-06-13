@@ -11,6 +11,7 @@ from django.views.generic import ListView, DetailView, CreateView
 from .models import SubTitle, Video
 from .control import init_subtitles_from_srt_file, init_subtitles_from_youtube
 from JumpTube import settings
+from django.http import HttpResponse
 
 def home(request):
     """Renders the home page."""
@@ -78,6 +79,13 @@ def video_init_from_youtube(request, pk):
 
     return HttpResponseRedirect(reverse('video_play', args=(video.id,)))
 
+
+def jump(request):
+    url_query  = request.GET.get('from_youtube')
+    video = Video.objects.get_or_create( url = url_query)[0]
+    init_subtitles_from_youtube(video.id)
+    
+    return HttpResponseRedirect(reverse('video_play', args=(video.id,)))
 
 class VideoListView(ListView):
     """Renders the home page, with a list of all videos."""

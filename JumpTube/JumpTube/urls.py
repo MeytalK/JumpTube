@@ -26,6 +26,7 @@ urlpatterns = [
     path('video_play/<int:pk>/', views.video_play, name='video_play'),
     path('video_init_from_srt/<int:pk>/', views.video_init_from_srt, name='video_init_from_srt'),
     path('video_init_from_youtube/<int:pk>/', views.video_init_from_youtube, name='video_init_from_youtube'),
+    path('jump/', views.jump, name='jump'),
     path('api-auth/', include('rest_framework.urls')),
     path('api/video_whole/<int:pk>/', api.VideoWholeView.as_view(), name='api_video_whole'),
 
