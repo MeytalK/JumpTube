@@ -8,9 +8,17 @@ from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
 from app import forms
 from app import views as app_views
-from jump_tube import views , models
+from jump_tube import views , models, api
 from django.conf import settings
 from django.conf.urls.static import static
+from django.urls import include, path
+from rest_framework import routers
+from rest_framework.urlpatterns import format_suffix_patterns
+
+router = routers.DefaultRouter()
+router.register(r'videos',       api.VideoViewSet)
+router.register(r'subtitles',    api.SubTitleViewSet)
+
 
 urlpatterns = [
    # path('', include(('jump_tube.urls', "jump_tube"), "jump_tube_urls")),
@@ -18,6 +26,10 @@ urlpatterns = [
     path('video_play/<int:pk>/', views.video_play, name='video_play'),
     path('video_init_from_srt/<int:pk>/', views.video_init_from_srt, name='video_init_from_srt'),
     path('video_init_from_youtube/<int:pk>/', views.video_init_from_youtube, name='video_init_from_youtube'),
+    path('api-auth/', include('rest_framework.urls')),
+    path('api/video_whole/<int:pk>/', api.VideoWholeView.as_view(), name='api_video_whole'),
+
+    path('api/', include(router.urls)),
     #path('video_list/',
     #    views.VideoListView.as_view(
     #    queryset=models.Video.objects.all(),
@@ -43,3 +55,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+
+
+
+#urlpatterns = format_suffix_patterns(urlpatterns)

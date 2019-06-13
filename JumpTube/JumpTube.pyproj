@@ -40,11 +40,17 @@
     <Compile Include="app\__init__.py" />
     <Compile Include="app\migrations\__init__.py" />
     <Compile Include="jump_tube\admin.py" />
+    <Compile Include="jump_tube\api.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="jump_tube\apps.py" />
     <Compile Include="jump_tube\control.py" />
     <Compile Include="jump_tube\forms.py" />
     <Compile Include="jump_tube\migrations\__init__.py" />
     <Compile Include="jump_tube\models.py" />
+    <Compile Include="jump_tube\serializers.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="jump_tube\tests.py" />
     <Compile Include="jump_tube\urls.py" />
     <Compile Include="jump_tube\views.py" />
