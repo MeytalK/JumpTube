@@ -83,10 +83,36 @@ def video_init_from_youtube(request, pk):
 def jump(request):
     url_query  = request.GET.get('from_youtube')
     video = Video.objects.get_or_create( url = url_query)[0]
-    
+    lang  = request.GET.get('lang')
+
+    print( 'request.GET', request.GET)
+
+    #if lang:
+    #    lang_list = []
+    #    lang_list.append(lang)
+    #    if init_subtitles_from_youtube(video.id, lang_list):
+    #        return HttpResponseRedirect(reverse('video_play', args=(video.id,)))
+
+    #    return HttpResponseRedirect(url_query)
+
     if init_subtitles_from_youtube(video.id):
         return HttpResponseRedirect(reverse('video_play', args=(video.id,)))
+
     return HttpResponseRedirect(url_query)
+
+
+def jump_to_language(request, language):
+    url_query  = request.GET.get('from_youtube')
+    video = Video.objects.get_or_create( url = url_query)[0]
+    
+    language_list = []
+    language_list.append(language)
+
+    if init_subtitles_from_youtube(video.id, language = language_list):
+        return HttpResponseRedirect(reverse('video_play', args=(video.id,)))
+    return HttpResponseRedirect(url_query)
+
+
 
 class VideoListView(ListView):
     """Renders the home page, with a list of all videos."""

@@ -54,7 +54,7 @@ def init_subtitles_from_srt_file( name_of_file , video_instance_id , encoding = 
     return None
 
 
-def init_subtitles_from_youtube( video_instance_id, languages =  ['ar','iw', 'en']):
+def init_subtitles_from_youtube( video_instance_id, languages =  [ 'iw',  'en', 'ar']):
     try:
         video = Video.objects.get(id=video_instance_id)
     except Video.DoesNotExist:
