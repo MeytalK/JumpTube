@@ -59,7 +59,7 @@ div.fixed {
         <center>
                {% for s in subs %}
 
-               <button class="new btn btn-success" onclick="player.seekTo({{s.stating_in_seconds}});player.playVideo();">{{s.text}}</button>
+               <button id="sb-{{s.id}}" class="new btn btn-success" onclick="player.seekTo({{s.stating_in_seconds}});player.playVideo();">{{s.text}}</button>
     <br >
                {% endfor %}
         </center>
@@ -150,9 +150,103 @@ div.fixed {
         player.playVideo();
         player.setSphericalProperties(sphericalProperties);
     }
+    </script>
+
+    <style>
+  .current-values {
+    color: #666;
+    font-size: 12px;
+  }
+</style>
+
+<!-- Display spherical property values and enable user to update them. -->
+<table style="border: 0; width: 640px;">
+  <tr style="background: #fff;">
+    <td>
+      <label for="yaw-property">yaw: </label>
+      <input type="text" id="yaw-property" style="width: 80px"><br>
+      <div id="yaw-current-value" class="current-values"> </div>
+    </td>
+    <td>
+      <label for="pitch-property">pitch: </label>
+      <input type="text" id="pitch-property" style="width: 80px"><br>
+      <div id="pitch-current-value" class="current-values"> </div>
+    </td>
+    <td>
+      <label for="roll-property">roll: </label>
+      <input type="text" id="roll-property" style="width: 80px"><br>
+      <div id="roll-current-value" class="current-values"> </div>
+    </td>
+    <td>
+      <label for="fov-property">fov: </label>
+      <input type="text" id="fov-property" style="width: 80px"><br>
+      <div id="fov-current-value" class="current-values"> </div>
+    </td>
+    <td style="vertical-align: bottom;">
+      <button id="spherical-properties-button">Update properties</button>
+    </td>
+  </tr>
+</table>
+
+
+
+    <script type="text/javascript">
+    var tag = document.createElement('script');
+  tag.id = 'iframe-demo';
+  tag.src = 'https://www.youtube.com/iframe_api';
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  var PROPERTIES = ['yaw', 'pitch', 'roll', 'fov'];
+  var updateButton = document.getElementById('spherical-properties-button');
+
+  // Don't display current spherical settings because there aren't any.
+  function hideCurrentSettings() {
+    for (var p = 0; p < PROPERTIES.length; p++) {
+      document.getElementById(PROPERTIES[p] + '-current-value').innerHTML = '';
+    }
+  }
+
+  // Retrieve current spherical property values from the API and display them.
+  function updateSetting() {
+    if (!player || !player.getSphericalProperties) {
+      hideCurrentSettings();
+    } else {
+      let newSettings = player.getSphericalProperties();
+      if (Object.keys(newSettings).length === 0) {
+        hideCurrentSettings();
+      } else {
+        for (var p = 0; p < PROPERTIES.length; p++) {
+          if (newSettings.hasOwnProperty(PROPERTIES[p])) {
+            currentValueNode = document.getElementById(PROPERTIES[p] +
+                                                       '-current-value');
+            currentValueNode.innerHTML = ('current: ' +
+                newSettings[PROPERTIES[p]].toFixed(4));
+          }
+        }
+      }
+    }
+    requestAnimationFrame(updateSetting);
+  }
+  updateSetting();
+
+  // Call the API to update spherical property values.
+  updateButton.onclick = function() {
+    var sphericalProperties = {};
+    for (var p = 0; p < PROPERTIES.length; p++) {
+      var propertyInput = document.getElementById(PROPERTIES[p] + '-property');
+      sphericalProperties[PROPERTIES[p]] = parseFloat(propertyInput.value);
+    }
+    player.setSphericalProperties(sphericalProperties);
+  }
+    
+    
 </script>
 
         
+    <div id=" = 'spherical-properties-button'">
+
+    </div>
 
 
           </div>

@@ -13,6 +13,7 @@ class Video(models.Model):
     description                 = models.TextField( default = u'',blank=True, null=True,max_length = MAX_TEXT)
     from_file                   = models.FileField(default = None, blank=True, null=True,upload_to='uploads/%Y/%m/%d/', max_length = 100000000000)
     srt_file                    = models.FileField(default = None, blank=True, null=True,upload_to='uploads/%Y/%m/%d/', max_length = 100000000)
+    picture                     = models.ImageField(default = None, blank=True, null=True,upload_to='uploads/%Y/%m/%d/', max_length = 100000000)
     created_at                  = models.DateTimeField(auto_now_add=True)
     updated_at                  = models.DateTimeField(auto_now=True)
     
@@ -36,6 +37,11 @@ class SubTitle(models.Model):
     index                       = models.IntegerField(default = 0)
     stating_in_seconds          = models.FloatField(default   = 0.0)
     duration_in_seconds         = models.FloatField(default   = 0.0)
+    picture                     = models.ImageField(default = None, blank=True, null=True,upload_to='uploads/%Y/%m/%d/', max_length = 100000000)
+    yaw                         = models.FloatField(default   = 0.0  )
+    pitch                       = models.FloatField(default   = 0.0  )
+    roll                        = models.FloatField(default   = 0.0  )
+    fov                         = models.FloatField(default   = 100.0)
     def __str__(self):
         return str(self.index) + ' ' + self.text
 
