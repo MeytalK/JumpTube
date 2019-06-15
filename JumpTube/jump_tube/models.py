@@ -51,5 +51,5 @@ class SubTitle(models.Model):
 
 
         return (
-            self.video.get_absolute_url() + '#sb-' + str(self.id )
+            reverse('subtitle_play', kwargs={'pk': str(self.id)}) 
                     )

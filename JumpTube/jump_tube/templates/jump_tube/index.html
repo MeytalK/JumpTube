@@ -4,9 +4,14 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+      {% load staticfiles %}
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'jump_tube/bootstrap-4.3.1-dist/css/bootstrap.min.css' %}" />
+
+      
+<script src="{% static 'jump_tube/bootstrap-4.3.1-dist/js/bootstrap.min.js' %}" ></script>
+
 
     <title>JumpTube</title>
    </head>
@@ -67,7 +72,7 @@ div.fixed {
                        {{s.text}}
                 </button>
              {% if user.is_authenticated %}
-                           <a class="new btn btn-info" href="/admin/jump_tube/subtitle/+{{s.id}}" >edit</a> 
+                           <a class="new btn btn-info" href="/admin/jump_tube/subtitle/{{s.id}}" >edit</a> 
                            {% endif %}
     <br >
                {% endfor %}
@@ -118,9 +123,11 @@ div.fixed {
 
       // 4. The API will call this function when the video player is ready.
       function onPlayerReady(event) {
-       //{% if initial_stating_in_seconds %}
-        //   event.target.seekTo({{initial_stating_in_seconds}});
-        //{% endif %}
+       {% if initial_subtitle %}
+           event.target.seekTo({{initial_subtitle.stating_in_seconds}});
+        document.getElementById("sb-{{initial_subtitle.id}}").focus();
+        
+        {% endif %}
 	 //   event.target.seekTo(133.124);
         event.target.playVideo();
       }
@@ -129,7 +136,8 @@ div.fixed {
     </script>
 
           
-<div class="row">
+<div class="row" id='debug'>
+    {% if user.is_authenticated %}
 
 <button onclick="myFunction()">Jump</button>
 
@@ -147,7 +155,8 @@ div.fixed {
 <p></p>
 <p></p>
 <p></p>
-    {{initial_stating_in_seconds}}
+    
+
 <script type="text/javascript">
     
     function myFunction() {
@@ -260,6 +269,7 @@ div.fixed {
 
     </div>
 
+     {% endif %}
 
           </div>
           
