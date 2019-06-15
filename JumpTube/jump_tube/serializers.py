@@ -15,7 +15,7 @@ class VideoSerializer(serializers.HyperlinkedModelSerializer):
             'srt_file'   ,         
             'created_at' ,           
             'updated_at' ,     
-            'picture'    ,
+            'thumbnail'    ,
             )            
     
 
@@ -33,7 +33,7 @@ class SubTitleSerializer(serializers.HyperlinkedModelSerializer):
             'pitch'              ,
             'roll'               ,
             'fov'                ,
-            'picture'            ,
+            'picture'          ,
         )
 
 
@@ -51,7 +51,7 @@ class VideoWholeSerializer(serializers.ModelSerializer):
             'srt_file'   ,         
             'created_at' ,           
             'updated_at' ,           
-            'picture'     ,
+            'thumbnail'   ,
             'subtitle_set',
             )
 

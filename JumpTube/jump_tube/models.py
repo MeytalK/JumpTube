@@ -13,7 +13,7 @@ class Video(models.Model):
     description                 = models.TextField( default = u'',blank=True, null=True,max_length = MAX_TEXT)
     from_file                   = models.FileField(default = None, blank=True, null=True,upload_to='uploads/%Y/%m/%d/', max_length = 100000000000)
     srt_file                    = models.FileField(default = None, blank=True, null=True,upload_to='uploads/%Y/%m/%d/', max_length = 100000000)
-    picture                     = models.ImageField(default = None, blank=True, null=True,upload_to='uploads/%Y/%m/%d/', max_length = 100000000)
+    thumbnail                   = models.ImageField(default = None, blank=True, null=True,upload_to='uploads/%Y/%m/%d/', max_length = 100000000)
     created_at                  = models.DateTimeField(auto_now_add=True)
     updated_at                  = models.DateTimeField(auto_now=True)
     
@@ -29,7 +29,7 @@ class Video(models.Model):
         return (
             reverse('video_play', kwargs={'pk': str(self.id)}) )
 
-        return self.video.url + '&t=' + str(int(self.stating_in_seconds)) + 's'
+        #return self.video.url + '&t=' + str(int(self.stating_in_seconds)) + 's'
 
 class SubTitle(models.Model):
     video                       = models.ForeignKey(Video, on_delete=models.CASCADE)
@@ -46,5 +46,8 @@ class SubTitle(models.Model):
         return str(self.index) + ' ' + self.text
 
 
+    
     def get_absolute_url(self):
-        return self.video.url + '&t=' + str(int(self.stating_in_seconds)) + 's'
+        return (
+            self.video.get_absolute_url() + '#sb-' + str(self.id )
+                    )
