@@ -32,9 +32,7 @@ def video_play(request, pk):
     except Video.DoesNotExist:
         video = Video.objects.first()
 
-    initial_stating_in_seconds  = request.GET.get('initial_stating_in_seconds')
-
-    print('initial_stating_in_seconds', initial_stating_in_seconds)
+    
 
     if video.from_file:
         return render(
@@ -44,7 +42,7 @@ def video_play(request, pk):
             {
                 'video_id':video.from_file.url,
                 'subs':video.subtitle_set.all().order_by('stating_in_seconds'),
-                'initial_stating_in_seconds': initial_stating_in_seconds,
+                #'initial_stating_in_seconds': initial_stating_in_seconds,
             }
         )
 
@@ -55,9 +53,21 @@ def video_play(request, pk):
             'video_id':video.url[len( 'https://www.youtube.com/watch?v='):],
             'subs':video.subtitle_set.all().order_by('stating_in_seconds'),
             'id':video.id,
-            'initial_stating_in_seconds': initial_stating_in_seconds,
+            #'initial_stating_in_seconds': initial_stating_in_seconds,
         }
     )
+
+
+def subtitle_play(request, pk):
+    try:
+        subtitle = SubTitle.objects.get(id=int(pk))
+    except Video.DoesNotExist:
+        subtitle = SubTitle.objects.first()
+
+    #initial_stating_in_seconds  = subtitle.stating_in_seconds
+
+    return HttpResponseRedirect(reverse('video_play', args=(subtitle.video.id)) + '&subtitle='
+                                +str(subtitle.id))
 
 
 def video_init_from_srt(request, pk):

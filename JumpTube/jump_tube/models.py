@@ -48,6 +48,8 @@ class SubTitle(models.Model):
 
     
     def get_absolute_url(self):
+
+
         return (
             self.video.get_absolute_url() + '#sb-' + str(self.id )
                     )

@@ -59,16 +59,16 @@ div.fixed {
         <center>
                {% for s in subs %}
                    <button id="sb-{{s.id}}" class="new btn btn-light" onclick="player.seekTo({{s.stating_in_seconds}});player.playVideo();" 
-                           {% if user.is_authenticated %}
-                           contenteditable="true"
-                           {% endif %}
+                           
                            >
                  {% if s.picture %}
                 <img src={{s.picture.url}} class="img-thumbnail"  >          
                 {% endif %}
                        {{s.text}}
                 </button>
-             
+             {% if user.is_authenticated %}
+                           <a class="new btn btn-info" href="/admin/jump_tube/subtitle/+{{s.id}}" >edit</a> 
+                           {% endif %}
     <br >
                {% endfor %}
         </center>
@@ -118,9 +118,9 @@ div.fixed {
 
       // 4. The API will call this function when the video player is ready.
       function onPlayerReady(event) {
-        {% if initial_stating_in_seconds %}
-           event.target.seekTo({{initial_stating_in_seconds}});
-        {% endif %}
+       //{% if initial_stating_in_seconds %}
+        //   event.target.seekTo({{initial_stating_in_seconds}});
+        //{% endif %}
 	 //   event.target.seekTo(133.124);
         event.target.playVideo();
       }
