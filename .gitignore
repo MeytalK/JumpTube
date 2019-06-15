@@ -1,8 +1,12 @@
 #ignore thumbnails created by windows
 Thumbs.db
+*.jpg
+*.JPG
+*.png
 *.mp4
 *.MP4
 *.exe
+/uploads
 #ignore by django
 *.sqlite3
 *.log
