@@ -18,7 +18,7 @@
 <div id="scroll" class="col-sm-6 col-md-3" >
                {% for s in subs %}
 
-               <button class="new btn btn-success" onclick="jump_to({{s.stating_in_seconds}});">{{s.text}}</button>
+               <button class="new btn btn-success" onclick="jump_to({{s.starting_in_seconds}});">{{s.text}}</button>
     <br >
                {% endfor %}
 
@@ -58,7 +58,7 @@
         function jump_to(  seond_to_jump) {
                    
             vid.currentTime = seond_to_jump;
-            vid.play();
+           // vid.play();
         }
     jump_to( 0);
 
@@ -67,8 +67,8 @@
 
           //var x = document.getElementById("demo").innerHTML = parseFloat(x);
             jump_to( x);
-          //vid.currentTime = x;
-          //vid.play();
+          vid.currentTime = x;
+          vid.play();
          }
           
 function getCurTime() { 

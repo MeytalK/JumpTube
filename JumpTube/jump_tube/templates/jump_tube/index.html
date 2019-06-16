@@ -63,7 +63,17 @@ div.fixed {
 <br>
         <center>
                {% for s in subs %}
-                   <button id="sb-{{s.id}}" class="new btn btn-light" onclick="player.seekTo({{s.stating_in_seconds}});player.playVideo();" 
+                   <button id="sb-{{s.id}}" class="new btn btn-light" onclick="player.seekTo({{s.starting_in_seconds}});
+                            if(isPlayer360()){
+                                var spParams = {};
+                                spParams['yaw'  ] = {{s.yaw   }};
+                                spParams['pitch'] = {{s.pitch }};
+                                spParams['roll' ] = {{s.roll  }};
+                                spParams['fov'  ] = {{s.fov   }};
+                          
+                                player.setSphericalProperties(spParams);
+                           }
+                           player.playVideo();" 
                            
                            >
                  {% if s.picture %}
@@ -94,84 +104,8 @@ div.fixed {
              
            </div>
         
-        
-      </div>
-  </div>
-
-   
-    <script type="text/javascript">
-      // 2. This code loads the IFrame Player API code asynchronously.
-      var tag = document.createElement('script');
-
-      tag.src = "https://www.youtube.com/iframe_api";
-      var firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-      // 3. This function creates an <iframe> (and YouTube player)
-      //    after the API code downloads.
-      var player;
-      function onYouTubeIframeAPIReady() {
-        player = new YT.Player('player', {
-          height: '390',
-          width: '640',
-          videoId: '{{video_id}}',
-          events: {
-            'onReady': onPlayerReady
-          }
-        });
-      }
-
-      // 4. The API will call this function when the video player is ready.
-      function onPlayerReady(event) {
-       {% if initial_subtitle %}
-           event.target.seekTo({{initial_subtitle.stating_in_seconds}});
-        document.getElementById("sb-{{initial_subtitle.id}}").focus();
-        
-        {% endif %}
-	 //   event.target.seekTo(133.124);
-        event.target.playVideo();
-      }
-	  
-
-    </script>
-
-          
-<div class="row" id='debug'>
-    {% if user.is_authenticated %}
-
-<button onclick="myFunction()">Jump</button>
-
-<form id="myForm" action="/action_page.php">
-  Second: <input type="text" name="fname" value="0"><br>
-  yaw: <input type="text" name="fname" value="0"><br>
-  pitch: <input type="text" name="fname" value="0"><br>
-  roll: <input type="text" name="fname" value="0"><br>
-  fov: <input type="text" name="fname" value="0"><br>
-</form> 
-<a class="new btn btn-success" href="/video_init_from_srt/{{ id }}/">Init subtitles</a>   
-
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-    
-
-<script type="text/javascript">
-    
-    function myFunction() {
-        var x = parseFloat(document.getElementById("myForm").elements.item(0).value);
-        //  document.getElementById("demo").innerHTML = parseInt(x);
-        var sphericalProperties = {};
-        sphericalProperties['yaw'  ] = parseFloat(document.getElementById("myForm").elements.item(1).value);
-        sphericalProperties['pitch'] = parseFloat(document.getElementById("myForm").elements.item(2).value);
-        sphericalProperties['roll' ] = parseFloat(document.getElementById("myForm").elements.item(3).value);
-        sphericalProperties['fov'  ] = parseFloat(document.getElementById("myForm").elements.item(4).value);
-        player.seekTo(x);
-        player.playVideo();
-        player.setSphericalProperties(sphericalProperties);
-    }
-    </script>
+             
+      <div id="panel360">
 
     <style>
   .current-values {
@@ -184,7 +118,7 @@ div.fixed {
 <table style="border: 0; width: 640px;">
   <tr style="background: #fff;">
     <td>
-      <label for="yaw-property">yaw: </label>
+      <label for="yaw-property">yaw:</label>
       <input type="text" id="yaw-property" style="width: 80px"><br>
       <div id="yaw-current-value" class="current-values"> </div>
     </td>
@@ -203,9 +137,11 @@ div.fixed {
       <input type="text" id="fov-property" style="width: 80px"><br>
       <div id="fov-current-value" class="current-values"> </div>
     </td>
+       {% if user.is_authenticated %}
     <td style="vertical-align: bottom;">
       <button id="spherical-properties-button">Update properties</button>
     </td>
+      {% endif %}
   </tr>
 </table>
 
@@ -269,9 +205,134 @@ div.fixed {
 
     </div>
 
-     {% endif %}
+          
+      </div>
 
+
+      </div>
+  </div>
+
+   
+    <script type="text/javascript">
+      // 2. This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+            
+    
+       var spParam = {};
+       {% if initial_subtitle %}
+            spParam['yaw'  ] = {{initial_subtitle.yaw   }};
+            spParam['pitch'] = {{initial_subtitle.pitch }};
+            spParam['roll' ] = {{initial_subtitle.roll  }};
+            spParam['fov'  ] = {{initial_subtitle.fov   }};
+        {% else %}
+            spParam['yaw'  ] = {{video.yaw   }};
+            spParam['pitch'] = {{video.pitch }};
+            spParam['roll' ] = {{video.roll  }};
+            spParam['fov'  ] = {{video.fov   }};
+        {% endif %}
+    
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '390',
+          width: '640',
+          videoId: '{{video_id}}',
+           events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+      }
+       
+        function isPlayer360() {
+            let newSettings = player.getSphericalProperties();
+            if (Object.keys(newSettings).length === 0) {
+                return false;
+            }
+            return true;
+        }
+          
+
+      // 4. The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+       {% if initial_subtitle %}
+            event.target.seekTo({{initial_subtitle.starting_in_seconds}});
+            document.getElementById("sb-{{initial_subtitle.id}}").focus();
+        {% else %}
+            event.target.seekTo({{video.starting_in_seconds}});
+         {% endif %}
+        event.target.playVideo();
+ 	       
+      }
+	  
+         var  NotYetsetSphericalProperties = true;
+        function onPlayerStateChange(event) {
+       
+        if( isPlayer360() && NotYetsetSphericalProperties)
+        {
+        NotYetsetSphericalProperties = false;        
+        event.target.setSphericalProperties(spParam);
+        }
+        
+    
+       
+      }
+	  
+
+    </script>
+
+        {% if user.is_authenticated %}
+          
+<div class="row" id='debug'>
+   
+
+<button onclick="myFunction()">Jump</button>
+
+<form id="myForm" action="/action_page.php">
+  Second: <input type="text" name="fname" value="0"><br>
+  yaw: <input type="text" name="fname" value="0"><br>
+  pitch: <input type="text" name="fname" value="0"><br>
+  roll: <input type="text" name="fname" value="0"><br>
+  fov: <input type="text" name="fname" value="0"><br>
+  current_sub_id: <input type="text" name="fname" value=""><br>
+</form> 
+<a class="new btn btn-success" href="/video_init_from_srt/{{ video.id }}/">Init subtitles</a>   
+
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+    
+
+<script type="text/javascript">
+    
+    function myFunction() {
+        var x = parseFloat(document.getElementById("myForm").elements.item(0).value);
+        //  document.getElementById("demo").innerHTML = parseInt(x);
+        var sphericalProperties = {};
+        sphericalProperties['yaw'  ] = parseFloat(document.getElementById("myForm").elements.item(1).value);
+        sphericalProperties['pitch'] = parseFloat(document.getElementById("myForm").elements.item(2).value);
+        sphericalProperties['roll' ] = parseFloat(document.getElementById("myForm").elements.item(3).value);
+        sphericalProperties['fov'  ] = parseFloat(document.getElementById("myForm").elements.item(4).value);
+        player.seekTo(x);
+        player.playVideo();
+        player.setSphericalProperties(sphericalProperties);
+    }
+    </script>
+     
+
+ 
           </div>
+
+         {% endif %}
           
   </body>
 </html>

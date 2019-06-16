@@ -22,7 +22,7 @@ def create_video_from_srt_file( name_of_file , url = u'', encoding = 'utf-8', na
         new_sub = video.subtitle_set.create()
         new_sub.text = s.text
         new_sub.index = s.index
-        new_sub.stating_in_seconds = get_seconds(s.start)
+        new_sub.starting_in_seconds = get_seconds(s.start)
         new_sub.duration_in_seconds = get_seconds( s.end) - get_seconds(s.start)
         new_sub.save()
         print (new_sub)
@@ -45,7 +45,7 @@ def init_subtitles_from_srt_file( name_of_file , video_instance_id , encoding = 
             new_sub = video.subtitle_set.create()
             new_sub.text = s.text
             new_sub.index = s.index
-            new_sub.stating_in_seconds = get_seconds(s.start)
+            new_sub.starting_in_seconds = get_seconds(s.start)
             new_sub.duration_in_seconds = get_seconds( s.end) - get_seconds(s.start)
             new_sub.save()
             print (new_sub)
@@ -77,7 +77,7 @@ def init_subtitles_from_youtube( video_instance_id, languages =  [ 'iw',  'en', 
                 new_sub = video.subtitle_set.create()
                 new_sub.text = s['text']
                 new_sub.index = subs_from_youtube_index
-                new_sub.stating_in_seconds = s['start']
+                new_sub.starting_in_seconds = s['start']
                 new_sub.duration_in_seconds = s['duration']
                 new_sub.save()
                 print (new_sub)

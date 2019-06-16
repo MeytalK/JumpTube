@@ -27,7 +27,7 @@ class SubTitleSerializer(serializers.HyperlinkedModelSerializer):
             'video'              ,
             'text'               ,
             'index'              ,
-            'stating_in_seconds' ,
+            'starting_in_seconds' ,
             'duration_in_seconds',
             'yaw'                ,
             'pitch'              ,

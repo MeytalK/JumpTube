@@ -16,6 +16,11 @@ class Video(models.Model):
     thumbnail                   = models.ImageField(default = None, blank=True, null=True,upload_to='uploads/%Y/%m/%d/', max_length = 100000000)
     created_at                  = models.DateTimeField(auto_now_add=True)
     updated_at                  = models.DateTimeField(auto_now=True)
+    starting_in_seconds         = models.FloatField(default   = 0.0)
+    yaw                         = models.FloatField(default   = 0.0  )
+    pitch                       = models.FloatField(default   = 0.0  )
+    roll                        = models.FloatField(default   = 0.0  )
+    fov                         = models.FloatField(default   = 100.0)
     
 
     def __str__(self):
@@ -29,13 +34,13 @@ class Video(models.Model):
         return (
             reverse('video_play', kwargs={'pk': str(self.id)}) )
 
-        #return self.video.url + '&t=' + str(int(self.stating_in_seconds)) + 's'
+        #return self.video.url + '&t=' + str(int(self.starting_in_seconds)) + 's'
 
 class SubTitle(models.Model):
     video                       = models.ForeignKey(Video, on_delete=models.CASCADE)
     text                        = models.TextField(default = u'', blank=True, null=True, max_length = MAX_TEXT)
     index                       = models.IntegerField(default = 0)
-    stating_in_seconds          = models.FloatField(default   = 0.0)
+    starting_in_seconds         = models.FloatField(default   = 0.0)
     duration_in_seconds         = models.FloatField(default   = 0.0)
     picture                     = models.ImageField(default = None, blank=True, null=True,upload_to='uploads/%Y/%m/%d/', max_length = 100000000)
     yaw                         = models.FloatField(default   = 0.0  )

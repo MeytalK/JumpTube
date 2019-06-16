@@ -21,7 +21,7 @@ def home(request):
         'jump_tube/index.html',
         {
             'video_id':'QqAY0USF9zk',
-            'subs':Video.objects.first().subtitle_set.all().order_by('stating_in_seconds'),
+            'subs':Video.objects.first().subtitle_set.all().order_by('starting_in_seconds'),
         }
     )
 
@@ -34,7 +34,6 @@ def video_play(request, pk):
 
     initial_subtitle = None
         
-    print( "request.GET.get('subtitle')", request.GET.get('subtitle'))
     subtitle  = request.GET.get('subtitle')
     if subtitle:
         try:
@@ -50,7 +49,7 @@ def video_play(request, pk):
            # 'jump_tube/tmp.html',
             {
                 'video_id':video.from_file.url,
-                'subs':video.subtitle_set.all().order_by('stating_in_seconds'),
+                'subs':video.subtitle_set.all().order_by('starting_in_seconds'),
                 'initial_subtitle':initial_subtitle,
             }
         )
@@ -60,10 +59,10 @@ def video_play(request, pk):
         'jump_tube/index.html',
         {
             'video_id':video.url[len( 'https://www.youtube.com/watch?v='):],
-            'subs':video.subtitle_set.all().order_by('stating_in_seconds'),
-            'id':video.id,
+            'subs':video.subtitle_set.all().order_by('starting_in_seconds'),
+            'video':video ,
             'initial_subtitle': initial_subtitle,
-            'initial_subtitle': initial_subtitle,
+            'video': video,
         }
     )
 
@@ -75,7 +74,7 @@ def subtitle_play(request, pk):
         subtitle = SubTitle.objects.first()
 
   
-    #initial_stating_in_seconds  = subtitle.stating_in_seconds
+    #initial_stating_in_seconds  = subtitle.starting_in_seconds
 
     return HttpResponseRedirect(reverse('video_play', args=(subtitle.video.id,))  + '?subtitle=' +str(subtitle.id))
 
