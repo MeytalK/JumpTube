@@ -16,14 +16,16 @@ from django.http import HttpResponse
 def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
-    return render(
-        request,
-        'jump_tube/index.html',
-        {
-            'video_id':'QqAY0USF9zk',
-            'subs':Video.objects.first().subtitle_set.all().order_by('starting_in_seconds'),
-        }
-    )
+    request.user = None
+    return video_play(request, "59");
+    #return render(
+    #    request,
+    #    'jump_tube/index.html',
+    #    {
+    #        'video_id':'QqAY0USF9zk',
+    #        'subs':Video.objects.first().subtitle_set.all().order_by('starting_in_seconds'),
+    #    }
+    #)
 
 
 def video_play(request, pk):
