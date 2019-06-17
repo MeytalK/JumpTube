@@ -56,8 +56,10 @@ div.fixed {
 </style>
 <a href="/admin/jump_tube/video/" class="addlink"> </a>
       <div class="row">
-                
+       
 <script type="text/javascript">
+
+    
     function update_subtitle(
         subtitle_id,
         video_id,
@@ -92,12 +94,26 @@ div.fixed {
 
     function pick_360_parameters(subtitle_id) {
         if(isPlayer360()){
-            var spParams = player.setSphericalProperties;
-            spParams['yaw'  ] = {{s.yaw   }};
-            spParams['pitch'] = {{s.pitch }};
-            spParams['roll' ] = {{s.roll  }};
-            spParams['fov'  ] = {{s.fov   }};
-                          
+            var spParams = player.getSphericalProperties;
+            // construct an HTTP request
+            var xhr = new XMLHttpRequest();
+            var url = "/subtitle_set_360_parameters/" + subtitle_id + "/?yaw=" + String(spParams['yaw']) + "&pitch=" + String(spParams['pitch']) + "&roll=" + String(spParams['roll']) + "&fov" + String(spParams['fov']);
+
+
+            xhr.open('GET', url, true);
+            xhr.send(null);
+
+
+    //        xmlHttp.open( "GET", Url, true );
+    //xmlHttp.send( null );
+    //        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    //        xhr.send(JSON.stringify(messageData));
+    //        document.getElementById('current_subtitle_id').innerHTML = subtitle_id;
+
+    //        document.getElementById('current_yaw'  ).innerHTML =spParams['yaw'  ];
+    //        document.getElementById('current_pitch').innerHTML =spParams['pitch'];
+    //        document.getElementById('current_roll' ).innerHTML =spParams['roll' ];
+    //        document.getElementById('current_fov'  ).innerHTML =spParams['fov'  ];                          
         }
     }
 
@@ -131,20 +147,10 @@ div.fixed {
                 </button>
                 {% if user.is_authenticated %}
             <br>
-                            <a class="new btn btn-info" href="/admin/jump_tube/subtitle/{{s.id}}" >edit</a> 
-            <script type="text/javascript">
-                document.getElementById('current_subtitle').innerHTML = {{s.id}};
-            </script>
-                            <button class="new btn btn-primary" 
-                                    onclick="
-                                         pick_360_parameters(
-                                            {{s.id}});
-                                    "
-                                    >                                    
-                                    >pick 360
-                            </button>
-                            <a class="new btn btn-primary"  href="/subtitle_set_360_parameters/{{s.id}}/?yaw=1.2&pitch=3.4&roll=5.6&fov=7.8">pick 360</a>
-               <button id="sb-{{s.id}}" class="new btn btn-primary" onclick="player.seekTo({{s.starting_in_seconds}});
+                            
+                           <a class="new btn btn-info" href="/admin/jump_tube/subtitle/{{s.id}}" >edit</a> 
+                           
+               <button  class="new btn btn-primary" onclick="player.seekTo({{s.starting_in_seconds}});
                             if(isPlayer360()){
                                 var spParams = {};
                                     spParams['yaw'  ] = {{s.yaw   }};
@@ -157,7 +163,10 @@ div.fixed {
                                player.pauseVideo();" 
                                >
                              jump and pause
-                            </button>              
+                </button>              
+                <button  class="new btn btn-primary" onclick="pick_360_parameters({{s.id}});">
+                    Pick 360
+                </button>              
 
 
                 {% endif %}
