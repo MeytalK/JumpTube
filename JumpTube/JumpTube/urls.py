@@ -27,6 +27,8 @@ urlpatterns = [
     path('subtitle_play/<int:pk>/', views.subtitle_play, name='subtitle_play'),
     path('video_init_from_srt/<int:pk>/', views.video_init_from_srt, name='video_init_from_srt'),
     path('video_init_from_youtube/<int:pk>/', views.video_init_from_youtube, name='video_init_from_youtube'),
+    path('subtitle_set_360_parameters/<int:pk>/', views.subtitle_set_360_parameters, name='subtitle_set_360_parameters'),
+    path('video_add_subtitle/<int:pk>/', views.video_init_from_youtube, name='video_init_from_youtube'),
     path('jump/', views.jump, name='jump'),
     #path('jump_to_language/<language>', views.jump_to_language, name='jump_to_language'),
     path('api-auth/', include('rest_framework.urls')),

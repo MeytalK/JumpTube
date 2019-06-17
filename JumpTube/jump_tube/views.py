@@ -130,6 +130,52 @@ def jump(request):
     return HttpResponseRedirect(url_query)
 
 
+
+def subtitle_set_360_parameters(request, pk):
+    try:
+        subtitle = SubTitle.objects.get(id=int(pk))
+    except SubTitle.DoesNotExist:
+        return HttpResponseNotFound("not found - go back")
+
+    if request.GET.get('yaw')    :
+        subtitle.yaw    = request.GET.get('yaw')
+    if request.GET.get('pitch')  :
+        subtitle.pitch  = request.GET.get('pitch')
+    if request.GET.get('roll')   :
+        subtitle.roll   = request.GET.get('roll')
+    if request.GET.get('fov')    :
+        subtitle.fov    = request.GET.get('fov')
+    subtitle.save()
+
+
+
+    #initial_stating_in_seconds  = subtitle.starting_in_seconds
+
+    return HttpResponseRedirect(reverse('video_play', args=(subtitle.video.id,))  + '?subtitle=' +str(subtitle.id))
+
+
+def video_add_subtitle(request, pk):
+    try:
+        video = Video.objects.get(id=int(pk))
+    except Video.DoesNotExist:
+        return HttpResponseNotFound("not found - go back")
+
+    suntitle = video.subtitle_set.create()
+    if request.GET.get('starting_in_seconds')    :
+        subtitle.starting_in_seconds    = request.GET.get('starting_in_seconds')
+    if request.GET.get('yaw')    :
+        subtitle.yaw    = request.GET.get('yaw')
+    if request.GET.get('pitch')  :
+        subtitle.pitch  = request.GET.get('pitch')
+    if request.GET.get('roll')   :
+        subtitle.roll   = request.GET.get('roll')
+    if request.GET.get('fov')    :
+        subtitle.fov    = request.GET.get('fov')
+    subtitle.save()
+
+    return HttpResponseRedirect("/admin/jump_tube/subtitle/"+str(subtitle.id))
+        
+
 def jump_to_language(request, language):
     url_query  = request.GET.get('from_youtube')
     video = Video.objects.get_or_create( url = url_query)[0]
