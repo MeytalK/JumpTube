@@ -37,6 +37,19 @@ class SubTitleSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
+        
+
+class SubTitle360ParamsSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = SubTitle
+        fields = (
+            'yaw'                ,
+            'pitch'              ,
+            'roll'               ,
+            'fov'                ,
+        )
+
+
 class VideoWholeSerializer(serializers.ModelSerializer):
     
     subtitle_set = SubTitleSerializer(many=True)
@@ -52,6 +65,11 @@ class VideoWholeSerializer(serializers.ModelSerializer):
             'created_at' ,           
             'updated_at' ,           
             'thumbnail'   ,
+            'yaw'                ,
+            'pitch'              ,
+            'roll'               ,
+            'fov'                ,
             'subtitle_set',
             )
+
 

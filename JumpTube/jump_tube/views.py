@@ -173,7 +173,7 @@ def video_add_subtitle(request, pk):
         subtitle.fov    = request.GET.get('fov')
     subtitle.save()
 
-    return HttpResponseRedirect("/admin/jump_tube/subtitle/"+str(subtitle.id))
+    return HttpResponseRedirect("/admin/jump_tube/subtitle/"+str(subtitle.id)+ "/change/")
         
 
 def jump_to_language(request, language):

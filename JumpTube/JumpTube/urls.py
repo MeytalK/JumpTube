@@ -33,6 +33,7 @@ urlpatterns = [
     #path('jump_to_language/<language>', views.jump_to_language, name='jump_to_language'),
     path('api-auth/', include('rest_framework.urls')),
     path('api/video_whole/<int:pk>/', api.VideoWholeView.as_view(), name='api_video_whole'),
+    #path('api/subtitle_set_360_fields/<int:pk>/', api.Subtit, name='subtitle_set_360_fields'),
 
     path('api/', include(router.urls)),
     #path('video_list/',

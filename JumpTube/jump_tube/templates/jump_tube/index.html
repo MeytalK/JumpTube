@@ -57,6 +57,40 @@ div.fixed {
 <a href="/admin/jump_tube/video/" class="addlink"> </a>
       <div class="row">
                 
+<script type="text/javascript">
+    function update_subtitle(
+        subtitle_id,
+        video_id,
+        text,
+        index,
+        starting_in_seconds,       
+        duration_in_seconds,
+        yaw                ,
+        pitch              ,
+        roll               ,
+        fov                ,
+        picture          
+    )
+    {
+        var messageData = {};
+        messageData['subtitle_id'  ] = subtitle_id;
+        messageData['video'  ] = "/api/videos/" + video_id;
+        messageData['index'  ] = index;
+        messageData['starting_in_seconds'  ] = starting_in_seconds;
+        messageData['duration_in_seconds'  ] = duration_in_seconds;
+        messageData['yaw'  ] = yaw    ;
+        messageData['pitch'  ] = pitch  ;
+        messageData['roll'  ] = roll   ;
+        messageData['fov'  ] = fov    ;
+        messageData['picture'  ] = picture;
+        // construct an HTTP request
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', "/api/subtitles/" + subtitle_id, true);
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        xhr.send(JSON.stringify(messageData));
+    }
+
+</script>
 
 <div id="scroll" class="col-sm-6 col-md-3 overflow-auto1" >
      {% if user.is_authenticated %}
@@ -85,21 +119,39 @@ div.fixed {
                 {% if user.is_authenticated %}
             <br>
                             <a class="new btn btn-info" href="/admin/jump_tube/subtitle/{{s.id}}" >edit</a> 
-                            <a class="new btn btn-primary"  href="/subtitle_set_360_parameters/{{s.id}}/?yaw=1.2&pitch=3.4&roll=5.6&fov=7.8">pick 360</a>
-               <button id="sb-{{s.id}}" class="new btn btn-primary" onclick="player.seekTo({{s.starting_in_seconds}});
-                            if(isPlayer360()){
-                                var spParams = {};
-                                spParams['yaw'  ] = {{s.yaw   }};
-                                spParams['pitch'] = {{s.pitch }};
-                                spParams['roll' ] = {{s.roll  }};
-                                spParams['fov'  ] = {{s.fov   }};
+                            <button class="new btn btn-primary" 
+                                    onclick="
+                                         update_subtitle(
+                                            {{s.id}},
+                                            {{video.id}},
+                                            {{s.text               }},
+                                            {{s.index              }},
+                                            {{s.starting_in_seconds}},
+                                            {{s.duration_in_seconds}},
+                                            33.3,
+                                            44.4,
+                                            55.5,
+                                            70,
+                                            {{s.picture          }}
+                                            );"
+                                    
+                                    >pick 360
+                            </button>
+
+                            <button  class="new btn btn-primary" onclick="player.seekTo({{s.starting_in_seconds}});
+                                if(isPlayer360()){
+                                    var spParams = {};
+                                    spParams['yaw'  ] = {{s.yaw   }};
+                                    spParams['pitch'] = {{s.pitch }};
+                                    spParams['roll' ] = {{s.roll  }};
+                                    spParams['fov'  ] = {{s.fov   }};
                           
-                                player.setSphericalProperties(spParams);
-                           }
-                           player.pauseVideo();" 
-                           >
-             jump and pause
-                </button>              
+                                    player.setSphericalProperties(spParams);
+                               }
+                               player.pauseVideo();" 
+                               >
+                             jump and pause
+                            </button>              
 
 
                 {% endif %}
