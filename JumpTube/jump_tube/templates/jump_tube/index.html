@@ -90,6 +90,19 @@ div.fixed {
         xhr.send(JSON.stringify(messageData));
     }
 
+    function pick_360_parameters(subtitle_id) {
+        if(isPlayer360()){
+            var spParams = player.setSphericalProperties;
+            spParams['yaw'  ] = {{s.yaw   }};
+            spParams['pitch'] = {{s.pitch }};
+            spParams['roll' ] = {{s.roll  }};
+            spParams['fov'  ] = {{s.fov   }};
+                          
+        }
+    }
+
+      
+
 </script>
 
 <div id="scroll" class="col-sm-6 col-md-3 overflow-auto1" >
@@ -119,28 +132,21 @@ div.fixed {
                 {% if user.is_authenticated %}
             <br>
                             <a class="new btn btn-info" href="/admin/jump_tube/subtitle/{{s.id}}" >edit</a> 
+            <script type="text/javascript">
+                document.getElementById('current_subtitle').innerHTML = {{s.id}};
+            </script>
                             <button class="new btn btn-primary" 
                                     onclick="
-                                         update_subtitle(
-                                            {{s.id}},
-                                            {{video.id}},
-                                            {{s.text               }},
-                                            {{s.index              }},
-                                            {{s.starting_in_seconds}},
-                                            {{s.duration_in_seconds}},
-                                            33.3,
-                                            44.4,
-                                            55.5,
-                                            70,
-                                            {{s.picture          }}
-                                            );"
-                                    
+                                         pick_360_parameters(
+                                            {{s.id}});
+                                    "
+                                    >                                    
                                     >pick 360
                             </button>
-
-                            <button  class="new btn btn-primary" onclick="player.seekTo({{s.starting_in_seconds}});
-                                if(isPlayer360()){
-                                    var spParams = {};
+                            <a class="new btn btn-primary"  href="/subtitle_set_360_parameters/{{s.id}}/?yaw=1.2&pitch=3.4&roll=5.6&fov=7.8">pick 360</a>
+               <button id="sb-{{s.id}}" class="new btn btn-primary" onclick="player.seekTo({{s.starting_in_seconds}});
+                            if(isPlayer360()){
+                                var spParams = {};
                                     spParams['yaw'  ] = {{s.yaw   }};
                                     spParams['pitch'] = {{s.pitch }};
                                     spParams['roll' ] = {{s.roll  }};
@@ -215,6 +221,9 @@ div.fixed {
       {% endif %}
   </tr>
 </table>
+          <div id="current_subtitle">
+
+          </div>
 
            {% endif %}
 
