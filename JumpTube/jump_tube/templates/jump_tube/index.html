@@ -98,10 +98,16 @@ div.fixed {
             // construct an HTTP request
             var xhr = new XMLHttpRequest();
             var url = "/subtitle_set_360_parameters/" + subtitle_id + "/?yaw=" + spParams['yaw'].toFixed(4) + "&pitch=" + spParams['pitch'].toFixed(4) + "&roll=" + spParams['roll'].toFixed(4)+ "&fov=" + spParams['fov'].toFixed(4);
-
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    window.location.replace("/subtitle_play/" + String(subtitle_id) + "/");
+                }
+            };
 
             xhr.open('GET', url, true);
             xhr.send(null);
+            
+            
 
 
     //        xmlHttp.open( "GET", Url, true );
@@ -115,6 +121,21 @@ div.fixed {
     //        document.getElementById('current_roll' ).innerHTML =spParams['roll' ];
     //        document.getElementById('current_fov'  ).innerHTML =spParams['fov'  ];                          
         }
+    }
+
+    function add_subtitle(video_id) {
+        var url = "/video_add_subtitle/" + String(video_id) + "/?starting_in_seconds=" + player.getCurrentTime().toFixed(4);
+        if(isPlayer360()){
+            let spParams = player.getSphericalProperties();
+            // construct an HTTP request
+            url+= "&yaw=" + spParams['yaw'].toFixed(4) + "&pitch=" + spParams['pitch'].toFixed(4) + "&roll=" + spParams['roll'].toFixed(4)+ "&fov=" + spParams['fov'].toFixed(4);
+        }
+        
+        var xhr = new XMLHttpRequest();
+
+        xhr.open('GET', url, true);
+        xhr.send(null);
+        location.reload();
     }
 
       
@@ -164,7 +185,7 @@ div.fixed {
                                >
                              jump and pause
                 </button>              
-                <button  class="new btn btn-primary" onclick="pick_360_parameters({{s.id}});">
+                <button  class="new btn btn-warning" onclick="pick_360_parameters({{s.id}});">
                     Pick 360
                 </button>              
 
@@ -230,10 +251,9 @@ div.fixed {
       {% endif %}
   </tr>
 </table>
-          <div id="current_subtitle">
-
-          </div>
-
+          <button  class="new btn btn-warning" onclick="add_subtitle({{video.id}});">
+                    Add Subtitle
+                </button> 
            {% endif %}
 
     <script type="text/javascript">
@@ -380,22 +400,19 @@ div.fixed {
         {% if user.is_authenticated %}
           
 <div class="row" id='debug'>
-    <div id="add-sub">
-         <a class="new btn btn-light"  href="/video_add_subtitle/{{ video.id }}/?starting_in_seconds=123.456&yaw=1.2&pitch=3.4&roll=5.6&fov=7.8">add subtitle</a>
-    </div>
    
+    
 <button onclick="myFunction()">Jump</button>
 
 
 
 
 <form id="myForm" action="/action_page.php">
-  Second: <input type="text" name="fname" value="0"><br>
-  yaw: <input type="text" name="fname" value="0"><br>
-  pitch: <input type="text" name="fname" value="0"><br>
-  roll: <input type="text" name="fname" value="0"><br>
-  fov: <input type="text" name="fname" value="100"><br>
-  current_sub_id: <input type="text" name="fname" value=""><br>
+  Second: <input type="text" name="fname"      value="{{video.starting_in_seconds   }}"><br>
+  yaw: <input type="text" name="fname"         value="{{video.yaw   }}"><br>
+  pitch: <input type="text" name="fname"       value="{{video.pitch }}"><br>
+  roll: <input type="text" name="fname"        value="{{video.roll  }}"><br>
+  fov: <input type="text" name="fname"         value="{{video.fov   }}"><br>
 </form> 
 <a class="new btn btn-success" href="/video_init_from_srt/{{ video.id }}/">Init subtitles</a>   
 
@@ -419,7 +436,7 @@ div.fixed {
         sphericalProperties['pitch'] = parseFloat(document.getElementById("myForm").elements.item(2).value);
         sphericalProperties['roll' ] = parseFloat(document.getElementById("myForm").elements.item(3).value);
         sphericalProperties['fov'  ] = parseFloat(document.getElementById("myForm").elements.item(4).value);
-        player.seekTo(x);
+        //player.seekTo(x);
         player.playVideo();
         player.setSphericalProperties(sphericalProperties);
     }

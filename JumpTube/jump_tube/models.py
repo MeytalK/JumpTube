@@ -46,7 +46,7 @@ class SubTitle(models.Model):
     yaw                         = models.FloatField(default   = 0.0  )
     pitch                       = models.FloatField(default   = 0.0  )
     roll                        = models.FloatField(default   = 0.0  )
-    fov                         = models.FloatField(default   = 100.0)
+    fov                         = models.FloatField(default   = 100.0  )
     def __str__(self):
         return str(self.index) + ' ' + self.text
 
