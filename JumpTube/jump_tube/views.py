@@ -136,7 +136,7 @@ def subtitle_set_360_parameters(request, pk):
         subtitle = SubTitle.objects.get(id=int(pk))
     except SubTitle.DoesNotExist:
         return HttpResponseNotFound("not found - go back")
-
+    print(request.GET)
     if request.GET.get('yaw')    :
         subtitle.yaw    = request.GET.get('yaw')
     if request.GET.get('pitch')  :
@@ -146,7 +146,7 @@ def subtitle_set_360_parameters(request, pk):
     if request.GET.get('fov')    :
         subtitle.fov    = request.GET.get('fov')
     subtitle.save()
-
+    print(subtitle)
 
 
     #initial_stating_in_seconds  = subtitle.starting_in_seconds

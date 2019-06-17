@@ -94,10 +94,10 @@ div.fixed {
 
     function pick_360_parameters(subtitle_id) {
         if(isPlayer360()){
-            var spParams = player.getSphericalProperties;
+            let spParams = player.getSphericalProperties();
             // construct an HTTP request
             var xhr = new XMLHttpRequest();
-            var url = "/subtitle_set_360_parameters/" + subtitle_id + "/?yaw=" + String(spParams['yaw']) + "&pitch=" + String(spParams['pitch']) + "&roll=" + String(spParams['roll']) + "&fov" + String(spParams['fov']);
+            var url = "/subtitle_set_360_parameters/" + subtitle_id + "/?yaw=" + spParams['yaw'].toFixed(4) + "&pitch=" + spParams['pitch'].toFixed(4) + "&roll=" + spParams['roll'].toFixed(4)+ "&fov=" + spParams['fov'].toFixed(4);
 
 
             xhr.open('GET', url, true);
