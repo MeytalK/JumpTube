@@ -160,7 +160,7 @@ def video_add_subtitle(request, pk):
     except Video.DoesNotExist:
         return HttpResponseNotFound("not found - go back")
 
-    suntitle = video.subtitle_set.create()
+    subtitle = video.subtitle_set.create()
     if request.GET.get('starting_in_seconds')    :
         subtitle.starting_in_seconds    = request.GET.get('starting_in_seconds')
     if request.GET.get('yaw')    :
