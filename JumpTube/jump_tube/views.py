@@ -83,11 +83,23 @@ def subtitle_play(request, pk):
 
 
 
+def video_delete_all_subtitles(request, pk):
+    try:
+        video = Video.objects.get(id=int(pk))
+    except Video.DoesNotExist:
+        return HttpResponseNotFound("not found - go back")
+
+    for subtitle_to_delete in video.subtitle_set.all():
+                subtitle_to_delete.delete()
+
+    return HttpResponseRedirect(reverse('video_play', args=(video.id,)))
+
 def video_init_from_srt(request, pk):
     try:
         video = Video.objects.get(id=int(pk))
     except Video.DoesNotExist:
-        video = Video.objects.first()
+        return HttpResponseNotFound("not found - go back")
+
     video_id = None
 
     if video.srt_file:
@@ -102,7 +114,7 @@ def video_init_from_youtube(request, pk):
     try:
         video = Video.objects.get(id=int(pk))
     except Video.DoesNotExist:
-        video = Video.objects.first()
+        return HttpResponseNotFound("not found - go back")
 
     init_subtitles_from_youtube(video.id)
 

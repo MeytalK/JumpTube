@@ -38,9 +38,6 @@ def init_subtitles_from_srt_file( name_of_file , video_instance_id , encoding = 
 
     subs = pysrt.open(name_of_file, encoding=encoding)
     if subs:
-        for suntitle_to_delete in video.subtitle_set.all():
-            suntitle_to_delete.delete()
-   
         for s in subs:
             new_sub = video.subtitle_set.create()
             new_sub.text = s.text
@@ -49,7 +46,8 @@ def init_subtitles_from_srt_file( name_of_file , video_instance_id , encoding = 
             new_sub.duration_in_seconds = get_seconds( s.end) - get_seconds(s.start)
             new_sub.save()
             print (new_sub)
-            return video.id
+
+        return video.id
 
     return None
 

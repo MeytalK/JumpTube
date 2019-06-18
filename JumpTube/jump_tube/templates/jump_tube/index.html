@@ -162,7 +162,8 @@ div.fixed {
                            player.playVideo();" 
                            >
                  {% if s.picture %}
-                <img src={{s.picture.url}} class="img-thumbnail"  >          
+                <img src={{s.picture.url}} class="img-thumbnail"  > 
+                       <br>
                 {% endif %}
                        {{s.text}}
                 </button>
@@ -254,6 +255,10 @@ div.fixed {
           <button  class="new btn btn-warning" onclick="add_subtitle({{video.id}});">
                     Add Subtitle
                 </button> 
+          <br>
+          <button class="new btn btn-danger" href="/video_delete_all_subtitles/{{video.id}}/">
+                    Delete All Subtitles
+                </button>
            {% endif %}
 
     <script type="text/javascript">
