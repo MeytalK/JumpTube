@@ -53,9 +53,38 @@ div.fixed {
   right: 0;
   z-index: 1030;
 }
+
+
+.overflow-auto1 {
+  height: 500px;
+  overflow: scroll;
+}
+
+@media (min-width: 768px) {
+    .h-md-100 { height: 100vh; }
+}
+@media (max-width: 768px) {
+    .h-md-100 {}
+    #text-area{
+    height: 50vh;
+    overflow: scroll;
+    }
+}
+
+.btn-round { border-radius: 30px; }
+.bg-indigo { background: #f3f3f3; }
+.text-cyan { color: #35bdff; }
+
+
+.btn-width{
+  width: 100%;
+}
+
+
 </style>
-<a href="/admin/jump_tube/video/" class="addlink"> </a>
-      <div class="row">
+      
+</div>
+
        
 <script type="text/javascript">
 
@@ -141,15 +170,45 @@ div.fixed {
       
 
 </script>
+<div class="d-md-flex flex-row-reverse h-md-100 align-items-center">
 
-<div id="scroll" class="col-sm-6 col-md-3 overflow-auto1" >
+<!-- First Half VIDEO -->
+
+<div class="col-md-9 p-0 bg-white h-md-100 loginarea">
+    <div class="d-md-flex align-items-center h-md-100 justify-content-center">
+
+            <div id="player_col" class="col-12 p-1" >
+
+
+       <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+
+             <div class="embed-responsive embed-responsive-16by9">
+
+             <div class="embed-responsive-item" id="player"></div>
+
+            </div>
+          </div>
+
+    </div>
+</div>
+
+<!-- Second Half TEXT -->
+<div id="text-area" class="col-md-3 p-0 bg-indigo h-md-100 overflow-auto">
+
+    <div class="text-white d-md-flex  h-100 px-4 py-2 text-center justify-content-center">
+    <div class="logoarea pt-4 pb-5">
+
+        <div id="scroll" class="" >
      {% if user.is_authenticated %}
                 	<a class="new btn btn-info" href="/admin/jump_tube/video/" target="_blank">See all videos</a>   
     {% endif %}
-<br>
-        <center>
+                <br>
+                <div class="py-1">
+        <center class="">
+            <div class="py-1">
                {% for s in subs %}
-                   <button id="sb-{{s.id}}" class="new btn btn-light" onclick="player.seekTo({{s.starting_in_seconds}});
+                <div class="py-1">
+                   <button id="sb-{{s.id}}" class="new btn btn-info px-1 py-1 text-center btn-lg btn-width" onclick="player.seekTo({{s.starting_in_seconds}});
                             if(isPlayer360()){
                                 var spParams = {};
                                 spParams['yaw'  ] = {{s.yaw   }};
@@ -193,24 +252,29 @@ div.fixed {
 
                 {% endif %}
 <br >
+                    </div>
              {% endfor %}
+                </div>
         </center>
+                </div>
+            </div>
+    </div>
+
+    </div>
+</div>
+
+</div>
+
+
 </div>
 
 
 
 
 
-      <div id="player_col" class="col-sm-6 col-md-9" >
-  
-              
-       <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-            
-         <div class="embed-responsive embed-responsive-16by9">
-             
-           <div class="embed-responsive-item" id="player"></div>
-             
-           </div>
+
+
+
         
              
       <div id="panel360">
