@@ -38,6 +38,8 @@ desktop.ini
 obj/
 [Rr]elease*/
 _ReSharper*/
+.vs/
+
 
 
 
