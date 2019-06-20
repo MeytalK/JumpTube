@@ -83,8 +83,7 @@ div.fixed {
 
 </style>
       
-</div>
-
+     
        
 <script type="text/javascript">
 
@@ -134,23 +133,11 @@ div.fixed {
             };
 
             xhr.open('GET', url, true);
-            xhr.send(null);
-            
-            
-
-
-    //        xmlHttp.open( "GET", Url, true );
-    //xmlHttp.send( null );
-    //        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-    //        xhr.send(JSON.stringify(messageData));
-    //        document.getElementById('current_subtitle_id').innerHTML = subtitle_id;
-
-    //        document.getElementById('current_yaw'  ).innerHTML =spParams['yaw'  ];
-    //        document.getElementById('current_pitch').innerHTML =spParams['pitch'];
-    //        document.getElementById('current_roll' ).innerHTML =spParams['roll' ];
-    //        document.getElementById('current_fov'  ).innerHTML =spParams['fov'  ];                          
+            xhr.send(null);                         
         }
     }
+
+
 
     function add_subtitle(video_id) {
         var url = "/video_add_subtitle/" + String(video_id) + "/?starting_in_seconds=" + player.getCurrentTime().toFixed(4);
@@ -168,6 +155,46 @@ div.fixed {
     }
 
       
+    function load_video(video_id) {
+        // construct an HTTP request
+        var xhr = new XMLHttpRequest();
+        var url = "/api/video_whole/" + video_id + "/";
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var videoObj = JSON.parse(this.responseText);
+                console.log( videoObj.url                );
+                console.log( videoObj.name               );
+                console.log( videoObj.description        );
+                console.log( videoObj.from_file          );
+                console.log( videoObj.srt_file           );
+                console.log( videoObj.thumbnail          );
+                console.log( videoObj.created_at         );
+                console.log( videoObj.updated_at         );
+                console.log( videoObj.starting_in_seconds);
+                console.log( videoObj.yaw                );
+                console.log( videoObj.pitch              );
+                console.log( videoObj.roll               );
+                for (i in videoObj.subtitle_set) {
+                  console.log( videoObj.subtitle_set[i].id               );
+                  console.log( videoObj.subtitle_set[i].video                             );
+                  console.log( videoObj.subtitle_set[i].text                              );
+                  console.log( videoObj.subtitle_set[i].index                             );
+                  console.log( videoObj.subtitle_set[i].starting_in_seconds               );
+                  console.log( videoObj.subtitle_set[i].duration_in_seconds               );
+                  console.log( videoObj.subtitle_set[i].picture                           );
+                  console.log( videoObj.subtitle_set[i].yaw                               );
+                  console.log( videoObj.subtitle_set[i].pitch                             );
+                  console.log( videoObj.subtitle_set[i].roll                              );
+                  console.log( videoObj.subtitle_set[i].fov                               );
+                }
+            }
+        };
+
+        xhr.open('GET', url, true);
+        xhr.send();                         
+    }
+
+   // load_video({{video.id}});
 
 </script>
 <div class="d-md-flex flex-row-reverse h-md-100 align-items-center">
@@ -316,6 +343,7 @@ div.fixed {
       {% endif %}
   </tr>
 </table>
+           <p id="demo"></p>
           <button  class="new btn btn-warning" onclick="add_subtitle({{video.id}});">
                     Add Subtitle
                 </button> 
@@ -444,6 +472,7 @@ div.fixed {
             document.getElementById("sb-{{initial_subtitle.id}}").focus();
         {% else %}
             event.target.seekTo({{video.starting_in_seconds}});
+        
          {% endif %}
         event.target.playVideo();
  	       
