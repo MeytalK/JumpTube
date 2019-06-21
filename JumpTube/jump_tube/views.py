@@ -16,6 +16,7 @@ from django.http import HttpResponse
 def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
+    return HttpResponseRedirect(reverse('video_list'))
     request.user = None
     return video_play(request, "59");
     #return render(

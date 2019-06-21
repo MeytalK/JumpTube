@@ -14,8 +14,9 @@
    
 
       <div class="row">
-                 
+                  
 <div id="scroll" class="col-sm-6 col-md-3" >
+    <a class="new btn btn-info" href="{% url 'video_list' %}">לרשימת הסרטים</a> 
                {% for s in subs %}
 
                <button class="new btn btn-success" onclick="jump_to({{s.starting_in_seconds}});">{{s.text}}</button>
@@ -40,11 +41,6 @@
 </div>
 
 
-<form id="myForm" >
-  Jump To Second: <input type="text" name="fname" value="0"><br>
-</form> 
-
-<button onclick="myFunction()">Jump</button>
 
 <p id="demo"></p>
 
@@ -58,7 +54,7 @@
         function jump_to(  seond_to_jump) {
                    
             vid.currentTime = seond_to_jump;
-           // vid.play();
+            vid.play();
         }
     jump_to( 0);
 
@@ -75,7 +71,6 @@ function getCurTime() {
   alert(vid.currentTime);
 } 
     </script>
-          <button onclick="getCurTime()" type="button">Get current time position</button>
 
 
           </div>

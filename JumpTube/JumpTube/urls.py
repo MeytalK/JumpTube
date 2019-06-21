@@ -22,6 +22,7 @@ router.register(r'subtitles',    api.SubTitleViewSet)
 
 urlpatterns = [
    # path('', include(('jump_tube.urls', "jump_tube"), "jump_tube_urls")),
+    #path('', views.home, name='home'),
     path('', views.home, name='home'),
     path('video_play/<int:pk>/', views.video_play, name='video_play'),
     path('subtitle_play/<int:pk>/', views.subtitle_play, name='subtitle_play'),
