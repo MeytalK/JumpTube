@@ -40,7 +40,7 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('video_list/',
         views.VideoListView.as_view(
-        queryset=models.Video.objects.all(),
+        queryset=models.Video.objects.all().order_by('-id'),
         context_object_name='video_list',
         template_name='jump_tube/video_list.html',),
         name='video_list'),

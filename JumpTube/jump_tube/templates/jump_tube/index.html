@@ -226,10 +226,10 @@ div.fixed {
     <div class="logoarea pt-4 pb-5">
 
         <div id="scroll" class="" >
+                	<a class="new btn btn-info" href="{% url 'video_list' %}">לרשימת הסרטים</a> 
      {% if user.is_authenticated %}
                 	<a class="new btn btn-info" href="/admin/jump_tube/video/" target="_blank">See all videos</a> 
-     {% else %}
-                	<a class="new btn btn-info" href="{% url 'video_list' %}">לרשימת הסרטים</a> 
+    
     {% endif %}
                 <br>
                 <div class="py-1">
