@@ -27,7 +27,14 @@
         {% for video in video_list %}
         <tr>
             <td>
+                {% if video.name %}
                 <a href="{% url 'video_play' video.id %}" class="container">{{video.name}}</a>
+                {% else%}
+                    {% if video.url %}
+
+                    <a href="{% url 'video_play' video.id %}" class="container">{{video.url}} מספר{{ video.id}}</a>
+                    {% endif %}
+                {% endif %}
             </td>
         </tr>
         {% endfor %}

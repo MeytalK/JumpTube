@@ -140,6 +140,7 @@ def jump(request):
     if init_subtitles_from_youtube(video.id):
         return HttpResponseRedirect(reverse('video_play', args=(video.id,)))
 
+    video.delete()
     return HttpResponseRedirect(url_query)
 
 
