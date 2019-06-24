@@ -19,9 +19,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '7f3fc547-a959-4313-8ac4-ac03b5523eba'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -125,3 +122,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['static']))
 MEDIA_URL = '/media/'
 MEDIA_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['media']))
+
+
+try:
+    from local_settings import *
+except ImportError:
+    pass

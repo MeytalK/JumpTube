@@ -237,7 +237,7 @@ div.fixed {
             <div class="py-1">
                {% for s in subs %}
                 <div class="py-1">
-                   <button id="sb-{{s.id}}" class="new btn btn-info px-1 py-1 text-center btn-lg btn-width" onclick="player.seekTo({{s.starting_in_seconds}});
+                   <button id="sb-{{s.id}}" class="new btn btn-light px-1 py-1 text-center btn-lg btn-width" onclick="player.seekTo({{s.starting_in_seconds}});
                             if(isPlayer360()){
                                 var spParams = {};
                                 spParams['yaw'  ] = {{s.yaw   }};
