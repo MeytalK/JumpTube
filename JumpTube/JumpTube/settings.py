@@ -125,6 +125,6 @@ MEDIA_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['media']))
 
 
 try:
-    from local_settings import *
+    from .local_settings import *
 except ImportError:
     pass
