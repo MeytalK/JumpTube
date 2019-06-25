@@ -82,6 +82,11 @@
     <Folder Include="jump_tube\static\jump_tube\bootstrap-4.3.1-dist\" />
     <Folder Include="jump_tube\static\jump_tube\bootstrap-4.3.1-dist\css\" />
     <Folder Include="jump_tube\static\jump_tube\bootstrap-4.3.1-dist\js\" />
+    <Folder Include="jump_tube\static\jump_tube\node_modules\" />
+    <Folder Include="jump_tube\static\jump_tube\node_modules\video.js\" />
+    <Folder Include="jump_tube\static\jump_tube\node_modules\video.js\dist\" />
+    <Folder Include="jump_tube\static\jump_tube\node_modules\videojs-vr\" />
+    <Folder Include="jump_tube\static\jump_tube\node_modules\videojs-vr\dist\" />
     <Folder Include="jump_tube\templates\" />
     <Folder Include="jump_tube\templates\jump_tube\" />
   </ItemGroup>
@@ -106,9 +111,12 @@
     <Content Include="jump_tube\static\jump_tube\bootstrap-4.3.1-dist\js\bootstrap.js.map" />
     <Content Include="jump_tube\static\jump_tube\bootstrap-4.3.1-dist\js\bootstrap.min.js" />
     <Content Include="jump_tube\static\jump_tube\bootstrap-4.3.1-dist\js\bootstrap.min.js.map" />
+    <Content Include="jump_tube\static\jump_tube\node_modules\video.js\dist\video.min.js" />
+    <Content Include="jump_tube\static\jump_tube\node_modules\videojs-vr\dist\videojs-vr.min.js" />
     <Content Include="jump_tube\templates\jump_tube\tmp.html" />
     <Content Include="jump_tube\templates\jump_tube\video_list.html" />
     <Content Include="jump_tube\templates\jump_tube\video_view_mp4.html" />
+    <Content Include="jump_tube\templates\jump_tube\video_view_mp4_vr.html" />
     <Content Include="jump_tube\templates\jump_tube\index.html" />
     <Content Include="jump_tube\templates\jump_tube\layout.html" />
     <Content Include="requirements.txt" />

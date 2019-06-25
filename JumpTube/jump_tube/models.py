@@ -24,8 +24,6 @@ class Video(models.Model):
 
     def __str__(self):
         if self.url:
-            if self.srt_file:
-                return str(self.id) + ' ' + self.name + ' ' + self.url + ' ' + self.srt_file.name 
             return str(self.id) + ' ' + self.name + ' ' + self.url 
         return str(self.id) + ' ' + self.name
     

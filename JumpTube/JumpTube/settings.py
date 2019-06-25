@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'jump_tube',
     'django_extensions',
     'rest_framework',
+    'djcelery',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

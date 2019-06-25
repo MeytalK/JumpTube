@@ -7,6 +7,8 @@ Thumbs.db
 *.sqlite3
 *.log
 *.pot
+*.mkv
+*.MKV
 local_settings.py
 db.sqlite3
 migrations/
@@ -40,13 +42,6 @@ obj/
 _ReSharper*/
 .vs/
 jump_tube/__pycache_
-
-
-
-
-
-
-
-
 JumpTube/db.sqlite3
 JumpTube/.vs/JumpTube/v16/.suo
+

@@ -24,5 +24,16 @@ python D:\Projects\git_clones\JumpTube\JumpTube\python_env_for_autosub\Python27\
 python D:\Projects\git_clones\JumpTube\JumpTube\python_env_for_autosub\Python27\Scripts\autosub_app.py  -S iw -D iw C:\Users\Admin\Favorites\Downloads\1zadik.mp4
 python D:\Projects\git_clones\JumpTube\JumpTube\python_env_for_autosub\Python27\Scripts\autosub_app.py  -S iw -D iw C:\Users\Admin\Favorites\Downloads\2zadik.mp4
 
+D:\Projects\git_clones\JumpTube\JumpTube\python_env_for_autosub>youtube-dl.exe --id https://www.youtube.com/watch?v=0Qq5uXqLfiM
+[youtube] 0Qq5uXqLfiM: Downloading webpage
+[youtube] 0Qq5uXqLfiM: Downloading video info webpage
+[download] Destination: 0Qq5uXqLfiM.f137.mp4
+[download] 100% of 9.38MiB in 00:02
+[download] Destination: 0Qq5uXqLfiM.f140.m4a
+[download] 100% of 547.94KiB in 00:00
+[ffmpeg] Merging formats into "0Qq5uXqLfiM.mp4"
+Deleting original file 0Qq5uXqLfiM.f137.mp4 (pass -k to keep)
+Deleting original file 0Qq5uXqLfiM.f140.m4a (pass -k to keep)
 
+youtube-dl.exe --id --recode-video mp4 https://www.youtube.com/watch?v=zK0nLH7teNs
 

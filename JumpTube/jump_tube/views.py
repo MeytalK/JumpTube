@@ -7,9 +7,9 @@ from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponseRedirect
 from django.urls import reverse
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import SubTitle, Video
-from .control import init_subtitles_from_srt_file, init_subtitles_from_youtube
+from .control import init_subtitles_from_srt_file, init_subtitles_from_youtube, get_srt_from_youtube
 from JumpTube import settings
 from django.http import HttpResponse
 
@@ -126,6 +126,7 @@ def jump(request):
     url_query  = request.GET.get('from_youtube')
     #video = Video.objects.get_or_create( url = url_query)[0]
     video = Video.objects.create( url = url_query)
+    video.save()
     lang  = request.GET.get('lang')
 
     print( 'request.GET', request.GET)
@@ -141,8 +142,15 @@ def jump(request):
     if init_subtitles_from_youtube(video.id):
         return HttpResponseRedirect(reverse('video_play', args=(video.id,)))
 
-    video.delete()
-    return HttpResponseRedirect(url_query)
+    srt_file_name = get_srt_from_youtube(url = url_query)
+    print(srt_file_name)
+    video.srt_file = srt_file_name
+    video.save()
+    init_subtitles_from_srt_file(video.srt_file.name, video.id)
+    return HttpResponseRedirect(reverse('video_play', args=(video.id,)))
+    
+
+#    return HttpResponseRedirect(url_query)
 
 
 
@@ -217,4 +225,21 @@ class VideoCreateView(CreateView):
     """Renders the poll details page."""
     model = Video
 
+
+    
+class VideoUpdateView(UpdateView):
+    """Renders the poll details page."""
+    model = Video
+
+    
+class SubTitleDetailView(DetailView):
+    """Renders the poll details page."""
+    model = SubTitle
+
+    
+
+    
+class SubTitleUpdateView(UpdateView):
+    """Renders the poll details page."""
+    model = SubTitle
 
