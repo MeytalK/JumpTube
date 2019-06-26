@@ -57,6 +57,18 @@ def video_play(request, pk):
             }
         )
 
+    if video.audio_file:
+        return render(
+        request,
+        'jump_tube/audio_play.html',
+        {
+            'subs':video.subtitle_set.all().order_by('starting_in_seconds'),
+            'video':video ,
+            'initial_subtitle': initial_subtitle,
+        }
+    )
+
+
     return render(
         request,
         'jump_tube/index.html',
@@ -65,7 +77,6 @@ def video_play(request, pk):
             'subs':video.subtitle_set.all().order_by('starting_in_seconds'),
             'video':video ,
             'initial_subtitle': initial_subtitle,
-            'video': video,
         }
     )
 

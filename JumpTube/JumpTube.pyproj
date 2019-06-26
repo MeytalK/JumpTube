@@ -113,6 +113,7 @@
     <Content Include="jump_tube\static\jump_tube\bootstrap-4.3.1-dist\js\bootstrap.min.js.map" />
     <Content Include="jump_tube\static\jump_tube\node_modules\video.js\dist\video.min.js" />
     <Content Include="jump_tube\static\jump_tube\node_modules\videojs-vr\dist\videojs-vr.min.js" />
+    <Content Include="jump_tube\templates\jump_tube\audio_play.html" />
     <Content Include="jump_tube\templates\jump_tube\tmp.html" />
     <Content Include="jump_tube\templates\jump_tube\video_list.html" />
     <Content Include="jump_tube\templates\jump_tube\video_view_mp4.html" />

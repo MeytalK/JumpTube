@@ -1,0 +1,494 @@
+﻿<!doctype html>
+<html lang="en" dir="rtl">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      {% load staticfiles %}
+    <!-- Bootstrap CSS -->
+
+    <link rel="stylesheet" type="text/css" href="{% static 'jump_tube/bootstrap-4.3.1-dist/css/bootstrap.min.css' %}" />
+
+      
+<script src="{% static 'jump_tube/bootstrap-4.3.1-dist/js/bootstrap.min.js' %}" ></script>
+
+
+    <title>{{ video.name }}</title>
+   </head>
+  <body>
+           <style>
+
+.overflow-auto1 {
+  height: 500px;
+  overflow: auto;
+}
+
+div.relative {
+  position: relative;
+  width: 800px;
+  height: 400px;
+  border: 3px solid #73AD21;
+} 
+
+div.absolute {
+  position: absolute;
+  top: 80px;
+  right: 0;
+  width: 200px;
+  height: 100px;
+  border: 3px solid #73AD21;
+}
+div.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background-color: yellow;
+  padding: 50px;
+  font-size: 20px;
+}
+
+div.fixed {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+}
+
+
+.overflow-auto1 {
+  height: 500px;
+  overflow: scroll;
+}
+
+@media (min-width: 768px) {
+    .h-md-100 { height: 100vh; }
+}
+@media (max-width: 768px) {
+    .h-md-100 {}
+    #text-area{
+    height: 50vh;
+    overflow: scroll;
+    }
+}
+
+.btn-round { border-radius: 30px; }
+.bg-indigo { background: #f3f3f3; }
+.text-cyan { color: #35bdff; }
+
+
+.btn-width{
+  width: 100%;
+}
+
+
+</style>
+      
+     
+       
+<script type="text/javascript">
+
+    
+    function update_subtitle(
+        subtitle_id,
+        video_id,
+        text,
+        index,
+        starting_in_seconds,       
+        duration_in_seconds,
+        yaw                ,
+        pitch              ,
+        roll               ,
+        fov                ,
+        picture          
+    )
+    {
+        var messageData = {};
+        messageData['subtitle_id'  ] = subtitle_id;
+        messageData['video'  ] = "/api/videos/" + video_id;
+        messageData['index'  ] = index;
+        messageData['starting_in_seconds'  ] = starting_in_seconds;
+        messageData['duration_in_seconds'  ] = duration_in_seconds;
+        messageData['yaw'  ] = yaw    ;
+        messageData['pitch'  ] = pitch  ;
+        messageData['roll'  ] = roll   ;
+        messageData['fov'  ] = fov    ;
+        messageData['picture'  ] = picture;
+        // construct an HTTP request
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', "/api/subtitles/" + subtitle_id, true);
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        xhr.send(JSON.stringify(messageData));
+    }
+
+    function pick_360_parameters(subtitle_id) {
+        if(isPlayer360()){
+            let spParams = player.getSphericalProperties();
+            // construct an HTTP request
+            var xhr = new XMLHttpRequest();
+            var url = "/subtitle_set_360_parameters/" + subtitle_id + "/?yaw=" + spParams['yaw'].toFixed(4) + "&pitch=" + spParams['pitch'].toFixed(4) + "&roll=" + spParams['roll'].toFixed(4)+ "&fov=" + spParams['fov'].toFixed(4);
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    window.location.replace("/subtitle_play/" + String(subtitle_id) + "/");
+                }
+            };
+
+            xhr.open('GET', url, true);
+            xhr.send(null);                         
+        }
+    }
+
+
+
+    function add_subtitle(video_id) {
+        var url = "/video_add_subtitle/" + String(video_id) + "/?starting_in_seconds=" + player.getCurrentTime().toFixed(4);
+        if(isPlayer360()){
+            let spParams = player.getSphericalProperties();
+            // construct an HTTP request
+            url+= "&yaw=" + spParams['yaw'].toFixed(4) + "&pitch=" + spParams['pitch'].toFixed(4) + "&roll=" + spParams['roll'].toFixed(4)+ "&fov=" + spParams['fov'].toFixed(4);
+        }
+        
+        var xhr = new XMLHttpRequest();
+
+        xhr.open('GET', url, true);
+        xhr.send(null);
+        location.reload();
+    }
+
+      
+    function load_video(video_id) {
+        // construct an HTTP request
+        var xhr = new XMLHttpRequest();
+        var url = "/api/video_whole/" + video_id + "/";
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var videoObj = JSON.parse(this.responseText);
+                console.log( videoObj.url                );
+                console.log( videoObj.name               );
+                console.log( videoObj.description        );
+                console.log( videoObj.from_file          );
+                console.log( videoObj.srt_file           );
+                console.log( videoObj.thumbnail          );
+                console.log( videoObj.created_at         );
+                console.log( videoObj.updated_at         );
+                console.log( videoObj.starting_in_seconds);
+                console.log( videoObj.yaw                );
+                console.log( videoObj.pitch              );
+                console.log( videoObj.roll               );
+                for (i in videoObj.subtitle_set) {
+                  console.log( videoObj.subtitle_set[i].id               );
+                  console.log( videoObj.subtitle_set[i].video                             );
+                  console.log( videoObj.subtitle_set[i].text                              );
+                  console.log( videoObj.subtitle_set[i].index                             );
+                  console.log( videoObj.subtitle_set[i].starting_in_seconds               );
+                  console.log( videoObj.subtitle_set[i].duration_in_seconds               );
+                  console.log( videoObj.subtitle_set[i].picture                           );
+                  console.log( videoObj.subtitle_set[i].yaw                               );
+                  console.log( videoObj.subtitle_set[i].pitch                             );
+                  console.log( videoObj.subtitle_set[i].roll                              );
+                  console.log( videoObj.subtitle_set[i].fov                               );
+                }
+            }
+        };
+
+        xhr.open('GET', url, true);
+        xhr.send();                         
+    }
+
+   // load_video({{video.id}});
+
+</script>
+<div class="d-md-flex flex-row-reverse h-md-100 align-items-center">
+
+<!-- First Half VIDEO -->
+
+<div class="col-md-9 p-0 bg-white h-md-100 loginarea">
+    <div class="d-md-flex align-items-center h-md-100 justify-content-center">
+
+            <div id="player_col" class="col-12 p-1" >
+
+
+       <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+
+                <div class="embed-responsive embed-responsive-16by9">
+
+                    <div class="embed-responsive-item" id="player">
+                        <audio id="myAudio" controls>
+
+                            <source src="{{video.audio_file.url}}" type="audio/mpeg">
+
+                        </audio>
+                    </div>
+
+                </div>
+          </div>
+
+    </div>
+</div>
+
+<!-- Second Half TEXT -->
+<div id="text-area" class="col-md-3 p-0 bg-indigo h-md-100 overflow-auto">
+
+    <div class="text-white d-md-flex  h-100 px-4 py-2 text-center justify-content-center">
+    <div class="logoarea pt-4 pb-5">
+
+        <div id="scroll" class="" >
+                	<a class="new btn btn-info" href="{% url 'video_list' %}">לרשימת הסרטים</a> 
+     {% if user.is_authenticated %}
+                	<a class="new btn btn-info" href="/admin/jump_tube/video/" target="_blank">See all videos</a> 
+    
+    {% endif %}
+                <br>
+                <div class="py-1">
+        <center class="">
+            <div class="py-1">
+               {% for s in subs %}
+                <div class="py-1">
+                   <button id="sb-{{s.id}}" class="new btn btn-light px-1 py-1 text-center btn-lg btn-width" onclick="jump_to({{s.starting_in_seconds}});" 
+                           >
+                 {% if s.picture %}
+                <img src={{s.picture.url}} class="img-thumbnail"  > 
+                       <br>
+                {% endif %}
+                       {{s.text}}
+                </button>
+                {% if user.is_authenticated %}
+            <br>
+                            
+                           <a class="new btn btn-info" href="/admin/jump_tube/subtitle/{{s.id}}" >edit</a> 
+                           
+               <button  class="new btn btn-primary" onclick="jump_to({{s.starting_in_seconds}});
+                               vid.pause();" 
+                               >
+                             jump and pause
+                </button>              
+                <button  class="new btn btn-warning" onclick="pick_360_parameters({{s.id}});">
+                    Pick 360
+                </button>              
+
+
+                {% endif %}
+<br >
+                    </div>
+             {% endfor %}
+                </div>
+        </center>
+                </div>
+            </div>
+    </div>
+
+    </div>
+</div>
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+        
+             
+      <div id="panel360">
+
+    <style>
+  .current-values {
+    color: #666;
+    font-size: 12px;
+  }
+</style>
+          {% if user.is_authenticated %}
+<!-- Display spherical property values and enable user to update them. -->
+<table style="border: 0; width: 640px;">
+  <tr style="background: #fff;">
+    <td>
+      <label for="yaw-property">yaw:</label>
+      <input type="text" id="yaw-property" style="width: 80px"><br>
+      <div id="yaw-current-value" class="current-values"> </div>
+    </td>
+    <td>
+      <label for="pitch-property">pitch: </label>
+      <input type="text" id="pitch-property" style="width: 80px"><br>
+      <div id="pitch-current-value" class="current-values"> </div>
+    </td>
+    <td>
+      <label for="roll-property">roll: </label>
+      <input type="text" id="roll-property" style="width: 80px"><br>
+      <div id="roll-current-value" class="current-values"> </div>
+    </td>
+    <td>
+      <label for="fov-property">fov: </label>
+      <input type="text" id="fov-property" style="width: 80px"><br>
+      <div id="fov-current-value" class="current-values"> </div>
+    </td>
+       {% if user.is_authenticated %}
+    <td style="vertical-align: bottom;">
+      <button id="spherical-properties-button">Update properties</button>
+    </td>
+      {% endif %}
+  </tr>
+</table>
+           <p id="demo"></p>
+          <button  class="new btn btn-warning" onclick="add_subtitle({{video.id}});">
+                    Add Subtitle
+                </button> 
+          <br>
+          <button class="new btn btn-danger" href="/video_delete_all_subtitles/{{video.id}}/">
+                    Delete All Subtitles
+                </button>
+           {% endif %}
+
+    <script type="text/javascript">
+    var tag = document.createElement('script');
+  tag.id = 'iframe-demo';
+  tag.src = 'https://www.youtube.com/iframe_api';
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  var PROPERTIES = ['yaw', 'pitch', 'roll', 'fov'];
+  var updateButton = document.getElementById('spherical-properties-button');
+
+  // Don't display current spherical settings because there aren't any.
+  function hideCurrentSettings() {
+    for (var p = 0; p < PROPERTIES.length; p++) {
+      document.getElementById(PROPERTIES[p] + '-current-value').innerHTML = '';
+    }
+  }
+
+  // Retrieve current spherical property values from the API and display them.
+  function updateSetting() {
+    if (!player || !player.getSphericalProperties) {
+      hideCurrentSettings();
+    } else {
+      let newSettings = player.getSphericalProperties();
+      if (Object.keys(newSettings).length === 0) {
+        hideCurrentSettings();
+      } else {
+        for (var p = 0; p < PROPERTIES.length; p++) {
+          if (newSettings.hasOwnProperty(PROPERTIES[p])) {
+            currentValueNode = document.getElementById(PROPERTIES[p] +
+                                                       '-current-value');
+            currentValueNode.innerHTML = ('current: ' +
+                newSettings[PROPERTIES[p]].toFixed(4));
+          }
+        }
+      }
+    }
+    requestAnimationFrame(updateSetting);
+  }
+  updateSetting();
+
+  // Call the API to update spherical property values.
+  updateButton.onclick = function() {
+    var sphericalProperties = {};
+    for (var p = 0; p < PROPERTIES.length; p++) {
+      var propertyInput = document.getElementById(PROPERTIES[p] + '-property');
+      sphericalProperties[PROPERTIES[p]] = parseFloat(propertyInput.value);
+    }
+    player.setSphericalProperties(sphericalProperties);
+  }
+    
+    
+</script>
+
+        
+    <div id=" = 'spherical-properties-button'">
+
+    </div>
+
+          
+      </div>
+
+
+      </div>
+  </div>
+   
+    <script type="text/javascript">
+     
+   
+          
+        var vid = document.getElementById("myAudio");
+        vid.autoplay = true;
+        vid.play();
+
+    
+        function jump_to(  seond_to_jump) {
+                   
+            vid.currentTime = seond_to_jump;
+            vid.play();
+        }
+   
+
+      
+    {% if initial_subtitle %}
+        jump_to({{initial_subtitle.starting_in_seconds}});
+        document.getElementById("sb-{{initial_subtitle.id}}").focus();
+    {% else %}
+     
+        jump_to({{video.starting_in_seconds}});
+        
+    {% endif %}
+        
+ 	       
+      
+	  
+
+    </script>
+
+        {% if user.is_authenticated %}
+          
+<div class="row" id='debug'>
+   
+    
+<button onclick="myFunction()">Jump</button>
+
+
+
+
+<form id="myForm" action="/action_page.php">
+  Second: <input type="text" name="fname"      value="{{video.starting_in_seconds   }}"><br>
+  yaw: <input type="text" name="fname"         value="{{video.yaw   }}"><br>
+  pitch: <input type="text" name="fname"       value="{{video.pitch }}"><br>
+  roll: <input type="text" name="fname"        value="{{video.roll  }}"><br>
+  fov: <input type="text" name="fname"         value="{{video.fov   }}"><br>
+</form> 
+<a class="new btn btn-success" href="/video_init_from_srt/{{ video.id }}/">Init subtitles</a>   
+
+<p></p>
+<p></p>
+<p></p>
+   
+  
+    
+<p></p>
+<p></p>
+    
+
+<script type="text/javascript">
+    
+    function myFunction() {
+        var x = parseFloat(document.getElementById("myForm").elements.item(0).value);
+        //  document.getElementById("demo").innerHTML = parseInt(x);
+        var sphericalProperties = {};
+        sphericalProperties['yaw'  ] = parseFloat(document.getElementById("myForm").elements.item(1).value);
+        sphericalProperties['pitch'] = parseFloat(document.getElementById("myForm").elements.item(2).value);
+        sphericalProperties['roll' ] = parseFloat(document.getElementById("myForm").elements.item(3).value);
+        sphericalProperties['fov'  ] = parseFloat(document.getElementById("myForm").elements.item(4).value);
+        //player.seekTo(x);
+        player.playVideo();
+        player.setSphericalProperties(sphericalProperties);
+    }
+    </script>
+     
+
+ 
+          </div>
+
+         {% endif %}
+          
+  </body>
+</html>
