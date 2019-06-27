@@ -48,12 +48,12 @@ def video_play(request, pk):
     if video.from_file:
         return render(
             request,
-            'jump_tube/video_view_mp4.html',
+            'jump_tube/video_play.html',
            # 'jump_tube/tmp.html',
             {
-                'video_id':video.from_file.url,
-                'subs':video.subtitle_set.all().order_by('starting_in_seconds'),
-                'initial_subtitle':initial_subtitle,
+            'subs':video.subtitle_set.all().order_by('starting_in_seconds'),
+            'video':video ,
+            'initial_subtitle': initial_subtitle,
             }
         )
 
@@ -117,7 +117,8 @@ def video_init_from_srt(request, pk):
     if video.srt_file:
         video_id = init_subtitles_from_srt_file( settings.MEDIA_ROOT  + '/' + video.srt_file.name , video.id)
     if None == video_id:
-        init_subtitles_from_youtube(video.id)
+        if video.url:
+            init_subtitles_from_youtube(video.id)
         
 
     return HttpResponseRedirect(reverse('video_play', args=(video.id,)))
@@ -157,7 +158,7 @@ def jump(request):
     print(srt_file_name)
     video.srt_file = srt_file_name
     video.save()
-    init_subtitles_from_srt_file(video.srt_file.name, video.id)
+    init_subtitles_from_srt_file( video.srt_file.name, video.id)
     return HttpResponseRedirect(reverse('video_play', args=(video.id,)))
     
 

@@ -13,6 +13,7 @@ local_settings.py
 db.sqlite3
 migrations/
 media/
+uploads/
 #ignore thumbnails created by windows
 Thumbs.db
 #ignore python

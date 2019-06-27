@@ -1,0 +1,127 @@
+1
+00:00:04,608 --> 00:00:10,752
+Hi this is PC Rodger and on this short video I want to show you how you can save a webpage like this
+
+2
+00:00:11,008 --> 00:00:17,152
+Is homepage of pcrichard.com to a single-file some of you may be aware of the. MHT
+
+3
+00:00:17,408 --> 00:00:21,760
+He file for the. Mhtml file where you can do this
+
+4
+00:00:22,272 --> 00:00:28,416
+It's not a default option on Chrome or Firefox you might remember from Internet Explorer but who uses
+
+5
+00:00:28,672 --> 00:00:30,720
+That and that's a dead program anyway right
+
+6
+00:00:30,976 --> 00:00:37,120
+Well with chrome is not too hard to do with Firefox is actually a add-on that you have to get
+
+7
+00:00:37,376 --> 00:00:43,520
+With chrome is pretty easy and I will show you normally when you go to save a webpage like this you
+
+8
+00:00:43,776 --> 00:00:44,544
+You have
+
+9
+00:00:44,800 --> 00:00:50,944
+The two options of web page HTML only and it would just get one file but it doesn't end
+
+10
+00:00:51,200 --> 00:00:57,344
+Include all the graphics or any files that are required to help make up that page or what page can play
+
+11
+00:00:57,600 --> 00:01:03,744
+What kind of a messy subdirectory or folder with a lot of files in it and
+
+12
+00:01:04,000 --> 00:01:10,144
+And it's not as bad as cleaning need so it's nice to be able to it in a single-file which is which is
+
+13
+00:01:10,400 --> 00:01:11,680
+Almost perfect not quite but almost
+
+14
+00:01:12,960 --> 00:01:15,776
+And what, says he will just open another tab here
+
+15
+00:01:17,312 --> 00:01:23,456
+What type in Chrome colon slash slash flag so get this page here and let's just ask
+
+16
+00:01:23,712 --> 00:01:25,248
+Pro FM find
+
+17
+00:01:25,504 --> 00:01:27,552
+Multi pin mhtml
+
+18
+00:01:27,808 --> 00:01:32,928
+And you can see this option here save page as an HTML what quick and able
+
+19
+00:01:34,208 --> 00:01:36,768
+And then you simply have to restart Chrome
+
+20
+00:01:37,792 --> 00:01:40,096
+And now when you select save page as
+
+21
+00:01:40,608 --> 00:01:44,704
+Hand control s and save as a shortcut for that
+
+22
+00:01:44,960 --> 00:01:46,496
+You say that there are three options
+
+23
+00:01:46,752 --> 00:01:49,824
+What's the default actually being webpage single file
+
+24
+00:01:50,336 --> 00:01:52,640
+And if you could save you'll get just one file
+
+25
+00:01:52,896 --> 00:01:55,456
+With everything to Create page
+
+26
+00:01:55,712 --> 00:02:01,856
+And then when you go to open. Mhtml file you're probably find that the default is Internet Explorer on
+
+27
+00:02:02,112 --> 00:02:08,256
+Windows PC but you can also open in Chrome and you can either change the default because they open with
+
+28
+00:02:08,512 --> 00:02:11,072
+Dropping into a chrome window and it should open
+
+29
+00:02:11,328 --> 00:02:12,864
+That's it for the short video
+
+30
+00:02:13,120 --> 00:02:16,704
+Please check out the other videos from my channel water helpful tips and tricks
+
+31
+00:02:16,960 --> 00:02:19,264
+Or my website PC rajah.com
+
+32
+00:02:19,520 --> 00:02:21,312
+Thanks for watching we will see you next time

@@ -116,6 +116,7 @@
     <Content Include="jump_tube\templates\jump_tube\audio_play.html" />
     <Content Include="jump_tube\templates\jump_tube\tmp.html" />
     <Content Include="jump_tube\templates\jump_tube\video_list.html" />
+    <Content Include="jump_tube\templates\jump_tube\video_play.html" />
     <Content Include="jump_tube\templates\jump_tube\video_view_mp4.html" />
     <Content Include="jump_tube\templates\jump_tube\video_view_mp4_vr.html" />
     <Content Include="jump_tube\templates\jump_tube\index.html" />
