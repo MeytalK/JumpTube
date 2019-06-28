@@ -9,7 +9,7 @@ from django.http import HttpRequest, HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import SubTitle, Video
-from .control import init_subtitles_from_srt_file, init_subtitles_from_youtube, get_srt_from_youtube
+from .control import init_subtitles_from_srt_file, init_subtitles_from_youtube, get_srt_from_youtube, video_init_subtitles
 from JumpTube import settings
 from django.http import HttpResponse
 
@@ -112,13 +112,7 @@ def video_init_from_srt(request, pk):
     except Video.DoesNotExist:
         return HttpResponseNotFound("not found - go back")
 
-    video_id = None
-
-    if video.srt_file:
-        video_id = init_subtitles_from_srt_file( settings.MEDIA_ROOT  + '/' + video.srt_file.name , video.id)
-    if None == video_id:
-        if video.url:
-            init_subtitles_from_youtube(video.id)
+    video_init_subtitles(video.id)
         
 
     return HttpResponseRedirect(reverse('video_play', args=(video.id,)))
@@ -151,14 +145,15 @@ def jump(request):
 
     #    return HttpResponseRedirect(url_query)
 
-    if init_subtitles_from_youtube(video.id):
-        return HttpResponseRedirect(reverse('video_play', args=(video.id,)))
+    video_init_subtitles((video.id))
+    #if init_subtitles_from_youtube(video.id):
+    #    return HttpResponseRedirect(reverse('video_play', args=(video.id,)))
 
-    srt_file_name = get_srt_from_youtube(url = url_query)
-    print(srt_file_name)
-    video.srt_file = srt_file_name
-    video.save()
-    init_subtitles_from_srt_file( video.srt_file.name, video.id)
+    #srt_file_name = get_srt_from_youtube(url = url_query)
+    #print(srt_file_name)
+    #video.srt_file = srt_file_name
+    #video.save()
+    #init_subtitles_from_srt_file( video.srt_file.name, video.id)
     return HttpResponseRedirect(reverse('video_play', args=(video.id,)))
     
 

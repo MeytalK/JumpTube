@@ -45,6 +45,46 @@ def create_video( url = u'',  name = u'', description = u'', srt_file = None, vi
     return video.id
 
 
+
+def video_init_subtitles( video_instance_id, encoding = 'utf-8'):
+    try:
+        video = Video.objects.get(id=video_instance_id)
+    except Video.DoesNotExist:
+        return
+    
+    lang = video.lang = video.language_identifier
+    srt_file = None
+    if video.srt_file:
+        srt_file = video.srt_file.path        
+    else:
+        if video.url:
+            if  init_subtitles_from_youtube(video.id, languages = [lang]):
+                return video.id
+            srt_file = get_srt_from_youtube(url = video.url, lang = lang)
+        else:
+            if video.from_file:
+                srt_file = file_mp4_to_srt( video.from_file.path, lang)
+            else:
+                if video.audio_file:
+                    srt_file = file_mp3_to_srt( video.audio_file.path, lang)
+
+    
+    print ( 'srt_file', srt_file)
+    if srt_file:
+        init_subtitles_from_srt_file( srt_file, video.id, encoding = encoding)
+        print( 's ' , srt_file, 'v', video.srt_file)
+        if not video.srt_file :
+            print( 'del of ', srt_file)
+            os.system("del " + srt_file + " -y")
+
+
+                    
+
+
+    return video.id
+
+
+
 def create_video_from_srt_file( name_of_file , url = u'', encoding = 'utf-8', name = u'', description = u'', from_file = None):
     subs = pysrt.open(name_of_file, encoding=encoding)
     video = Video( url=url, description = description, name = name, from_file = from_file)
@@ -64,12 +104,17 @@ def init_subtitles_from_srt_file( name_of_file , video_instance_id = None, encod
     try:
         video = Video.objects.get(id=video_instance_id)
     except Video.DoesNotExist:
-        print( "video not found")
+        print( "video not found:" + name_of_file)
         return None
 
+    try:
+        subs = pysrt.open(name_of_file, encoding=encoding)
+    except TypeError:
+        print( "srt file not found")
+        return None
 
-    subs = pysrt.open(name_of_file, encoding=encoding)
     if subs:
+        video_delete_all_subtitles(video.id)
         for s in subs:
             new_sub = video.subtitle_set.create()
             new_sub.text = s.text

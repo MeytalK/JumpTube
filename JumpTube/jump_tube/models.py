@@ -21,6 +21,7 @@ class Video(models.Model):
     pitch               = models.FloatField(default   = 0.0  )
     roll                = models.FloatField(default   = 0.0  )
     fov                 = models.FloatField(default   = 100.0)
+    language_identifier = models.CharField( default = u'iw',max_length = 100)
     
 
     def __str__(self):
