@@ -20,39 +20,24 @@ def create_video( url = u'',  name = u'', description = u'', srt_file = None, vi
     
     video = Video( url=url, description = description, name = name, from_file = video_file, audio_file = audio_file)
     video.save()
-    
-    if srt_file:
-        video.srt_file = srt_file
-    else:
-        if url:
-            if None == init_subtitles_from_youtube(video.id):
-                srt_file = get_srt_from_youtube(url = url)
-        else:
-            if video_file:
-                video.from_file = video_file
-                srt_file = file_mp4_to_srt( video_file, lang)
-            else:
-                if audio_file:
-                    video.audio_file = audio_file
-                    srt_file = file_mp3_to_srt( audio_file, lang)
 
-    video.srt_file = srt_file
-    video.save()
-
-    if video.srt_file:
-        return init_subtitles_from_srt_file( video.srt_file.name, video.id, encoding = encoding)
+    video_init_subtitles( video.id, encoding = encoding, language_identifier = lang)
 
     return video.id
 
 
 
-def video_init_subtitles( video_instance_id, encoding = 'utf-8'):
+def video_init_subtitles( video_instance_id, encoding = 'utf-8', language_identifier = None):
     try:
         video = Video.objects.get(id=video_instance_id)
     except Video.DoesNotExist:
         return
     
-    lang = video.lang = video.language_identifier
+    if language_identifier:
+        video.language_identifier = language_identifier
+        video.save()
+
+    lang = video.language_identifier
     srt_file = None
     if video.srt_file:
         srt_file = video.srt_file.path        

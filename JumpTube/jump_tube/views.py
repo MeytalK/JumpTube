@@ -145,7 +145,7 @@ def jump(request):
 
     #    return HttpResponseRedirect(url_query)
 
-    video_init_subtitles((video.id))
+    video_init_subtitles((video.id), language_identifier=lang)
     #if init_subtitles_from_youtube(video.id):
     #    return HttpResponseRedirect(reverse('video_play', args=(video.id,)))
 
