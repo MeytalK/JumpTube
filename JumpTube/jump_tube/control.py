@@ -121,16 +121,17 @@ def proccess_row(row ):
     return False
 
 
-def add_videos_from_file( name_of_file_csv):
+def add_videos_from_file( name_of_file_csv, start_from = 0):
     #open csv file
     with_url = 0
     with open(name_of_file_csv, newline='',encoding="utf8") as csvfile:
         spamreader = csv.reader(csvfile)
         line_index = 0
         for row in spamreader:
-            print(line_index)
-            if proccess_row(row):
-                with_url +=1
+            if line_index > start_from:
+                print(line_index)
+                if proccess_row(row):
+                    with_url +=1
             line_index+=1
 
     return with_url
