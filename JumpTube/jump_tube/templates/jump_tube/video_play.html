@@ -340,59 +340,6 @@ div.fixed {
          
            {% endif %}
 
-    <script type="text/javascript">
-    var tag = document.createElement('script');
-  tag.id = 'iframe-demo';
-  tag.src = 'https://www.youtube.com/iframe_api';
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-  var PROPERTIES = ['yaw', 'pitch', 'roll', 'fov'];
-  var updateButton = document.getElementById('spherical-properties-button');
-
-  // Don't display current spherical settings because there aren't any.
-  function hideCurrentSettings() {
-    for (var p = 0; p < PROPERTIES.length; p++) {
-      document.getElementById(PROPERTIES[p] + '-current-value').innerHTML = '';
-    }
-  }
-
-  // Retrieve current spherical property values from the API and display them.
-  function updateSetting() {
-    if (!player || !player.getSphericalProperties) {
-      hideCurrentSettings();
-    } else {
-      let newSettings = player.getSphericalProperties();
-      if (Object.keys(newSettings).length === 0) {
-        hideCurrentSettings();
-      } else {
-        for (var p = 0; p < PROPERTIES.length; p++) {
-          if (newSettings.hasOwnProperty(PROPERTIES[p])) {
-            currentValueNode = document.getElementById(PROPERTIES[p] +
-                                                       '-current-value');
-            currentValueNode.innerHTML = ('current: ' +
-                newSettings[PROPERTIES[p]].toFixed(4));
-          }
-        }
-      }
-    }
-    requestAnimationFrame(updateSetting);
-  }
-  updateSetting();
-
-  // Call the API to update spherical property values.
-  updateButton.onclick = function() {
-    var sphericalProperties = {};
-    for (var p = 0; p < PROPERTIES.length; p++) {
-      var propertyInput = document.getElementById(PROPERTIES[p] + '-property');
-      sphericalProperties[PROPERTIES[p]] = parseFloat(propertyInput.value);
-    }
-    player.setSphericalProperties(sphericalProperties);
-  }
-    
-    
-</script>
-
         
     <div id=" = 'spherical-properties-button'">
 
@@ -415,7 +362,10 @@ div.fixed {
 
     
         function jump_to(  seond_to_jump) {
-                   
+                   if( vid.seekable.length)
+        {
+          console.log("seekable Start: " + vid.seekable.start(0) + " End: "  + vid.seekable.end(0));
+        }
             vid.currentTime = seond_to_jump;
             vid.play();
         }
@@ -486,7 +436,7 @@ div.fixed {
  
           </div>
 
-         {% endif %}
+       
       <br>    
       <br>    
       <br>    
@@ -505,5 +455,6 @@ div.fixed {
       <button class="new btn btn-danger" href="/video_delete_all_subtitles/{{video.id}}/">
                     Delete All Subtitles
                 </button>
+        {% endif %}
   </body>
 </html>

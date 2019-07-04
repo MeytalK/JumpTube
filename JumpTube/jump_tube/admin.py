@@ -6,6 +6,14 @@ from django.contrib import admin
 
 from .models import *
 
-admin.site.register(Video)
+class VideoAdmin(admin.ModelAdmin):
+    list_per_page = 20
+    list_display = ( 'id','name','description', 'url','language_identifier', 'youtube_channel','category')
+    ordering = ['id']
+    pass
+
+admin.site.register(Video,   VideoAdmin)
 admin.site.register(SubTitle)
+admin.site.register(YouTubeChannel)
+admin.site.register(Category)
 

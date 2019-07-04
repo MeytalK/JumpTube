@@ -20,6 +20,7 @@ router.register(r'videos',       api.VideoViewSet)
 router.register(r'subtitles',    api.SubTitleViewSet)
 
 
+
 urlpatterns = [
    # path('', include(('jump_tube.urls', "jump_tube"), "jump_tube_urls")),
     #path('', views.home, name='home'),

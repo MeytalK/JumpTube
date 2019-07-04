@@ -9,6 +9,7 @@ from youtube_transcript_api import YouTubeTranscriptApi
 import os
 from JumpTube import settings
 from django.core.files.storage import FileSystemStorage
+import csv
 
 
 def get_seconds(time):
@@ -68,7 +69,71 @@ def video_init_subtitles( video_instance_id, encoding = 'utf-8', language_identi
 
     return video.id
 
+def proccess_row(row ):
 
+    movie_id    =  row[ 0] #movie_id
+    title	    =  row[ 1] #title	
+    category   	=  row[ 2] #category	
+    channel	    =  row[ 3] #channel	
+    description =  row[ 4] #description
+    duration    =  row[ 5] #duration		
+    upload_date =  row[ 6] #upload_date	
+    channel_id  =  row[ 7] #channel_id
+
+    #print( 'movie_id   ', movie_id   )
+    #print( 'title	   ', title	   )
+    #print( 'category   ', category   )
+    #print( 'channel	   ', channel	   )
+    #print( 'description', description)
+    #print( 'duration   ', duration   )
+    #print( 'upload_date', upload_date)
+    if len(movie_id) == 11:
+        video_list = Video.objects.filter(url = ('https://www.youtube.com/watch?v=' + movie_id))
+        if video_list:
+            if video_list[0].subtitle_set.all().count():
+                print('skip ', movie_id)
+                return True
+        subs_from_youtube = get_subtitles_from_youtube(movie_id)
+        if None == subs_from_youtube:
+            return False
+        print(movie_id)
+        video = Video.objects.get_or_create(url = ('https://www.youtube.com/watch?v=' + movie_id))[0]
+        video.name        = title
+        video.description = description
+        video.save()
+        if video.subtitle_set.count():
+            return True
+        init_with_subtitles_from_youtube( video.id, subs_from_youtube)
+        if category:
+            category_instance = Category.objects.get_or_create(name = category)[0]
+            category_instance.save()
+            video.category = category_instance
+        if channel_id:
+            channel_instance = YouTubeChannel.objects.get_or_create(channel_id = channel_id)[0]
+            channel_instance.name = channel
+            channel_instance.save()
+            video.youtube_channel = channel_instance
+
+        video.save()
+            
+        return True    
+
+    return False
+
+
+def add_videos_from_file( name_of_file_csv):
+    #open csv file
+    with_url = 0
+    with open(name_of_file_csv, newline='',encoding="utf8") as csvfile:
+        spamreader = csv.reader(csvfile)
+        line_index = 0
+        for row in spamreader:
+            print(line_index)
+            if proccess_row(row):
+                with_url +=1
+            line_index+=1
+
+    return with_url
 
 def create_video_from_srt_file( name_of_file , url = u'', encoding = 'utf-8', name = u'', description = u'', from_file = None):
     subs = pysrt.open(name_of_file, encoding=encoding)
@@ -125,6 +190,47 @@ def video_delete_all_subtitles(video_instance_id ):
         subtitle_to_delete.delete()
 
 
+def get_subtitles_from_youtube( video_id, languages =  [ 'iw',  'en', 'ar']):
+    try:
+        subs_from_youtube = YouTubeTranscriptApi.get_transcript(video_id, languages = languages)
+    except YouTubeTranscriptApi.CouldNotRetrieveTranscript:
+        return None
+
+    return subs_from_youtube
+
+
+def init_with_subtitles_from_youtube( video_instance_id, subs_from_youtube = None):
+
+    try:
+        video = Video.objects.get(id=video_instance_id)
+    except Video.DoesNotExist:
+        print( "video not found")
+        return None
+
+    if video.url:
+
+        if subs_from_youtube:
+            for suntitle_to_delete in video.subtitle_set.all():
+                suntitle_to_delete.delete()
+
+            subs_from_youtube_index = 0
+
+            for s in subs_from_youtube:
+                new_sub = video.subtitle_set.create()
+                new_sub.text = s['text']
+                new_sub.index = subs_from_youtube_index
+                new_sub.starting_in_seconds = s['start']
+                new_sub.duration_in_seconds = s['duration']
+                new_sub.save()
+                print (new_sub)
+                subs_from_youtube_index+=1
+
+            return video.id
+
+    return None
+
+
+
 def init_subtitles_from_youtube( video_instance_id, languages =  [ 'iw',  'en', 'ar']):
     try:
         video = Video.objects.get(id=video_instance_id)
@@ -157,6 +263,7 @@ def init_subtitles_from_youtube( video_instance_id, languages =  [ 'iw',  'en', 
             return video.id
 
     return None
+
 
 
 
@@ -244,12 +351,6 @@ def add_video_from_youtube(url, name = u'', description = u''):
     return video.id
 
 def get_subtitles_from_audio_file( audio_file):
-    subtitles_file_name = None
-    return subtitles_file_name
-
-
-
-def get_subtitles_from_youtube( url):
     subtitles_file_name = None
     return subtitles_file_name
 

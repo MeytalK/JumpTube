@@ -1,5 +1,5 @@
 ﻿<!doctype html>
-<html lang="en" dir="rtl">
+<html lang="en" dir="ltr">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -237,7 +237,8 @@ div.fixed {
             <div class="py-1">
                {% for s in subs %}
                 <div class="py-1">
-                   <button id="sb-{{s.id}}" class="new btn btn-light px-1 py-1 text-center btn-lg btn-width" onclick="player.seekTo({{s.starting_in_seconds}});
+                   <button id="sb-{{s.id}}" class="new btn btn-light px-1 py-1 text-center btn-lg btn-width" onclick=
+                           "player.seekTo({{s.starting_in_seconds}});
                             if(isPlayer360()){
                                 var spParams = {};
                                 spParams['yaw'  ] = {{s.yaw   }};
@@ -543,7 +544,7 @@ div.fixed {
  
           </div>
 
-         {% endif %}
+        
       
       <br>    
       <br>    
@@ -562,5 +563,6 @@ div.fixed {
           <button class="new btn btn-danger" href="/video_delete_all_subtitles/{{video.id}}/">
                     Delete All Subtitles
                 </button>
+       {% endif %}
   </body>
 </html>

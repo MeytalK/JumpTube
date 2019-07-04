@@ -15,7 +15,7 @@ class VideoSerializer(serializers.HyperlinkedModelSerializer):
             'srt_file'   ,         
             'created_at' ,           
             'updated_at' ,     
-            'thumbnail'    ,
+            'thumbnail'  ,
             )            
     
 
