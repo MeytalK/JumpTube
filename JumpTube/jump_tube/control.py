@@ -94,8 +94,7 @@ def proccess_row(row ):
                 print('skip ', movie_id)
                 return True
         subs_from_youtube = get_subtitles_from_youtube(movie_id)
-        if None == subs_from_youtube:
-            return False
+        
         print(movie_id)
         video = Video.objects.get_or_create(url = ('https://www.youtube.com/watch?v=' + movie_id))[0]
         video.name        = title
@@ -103,8 +102,15 @@ def proccess_row(row ):
         video.save()
         if video.subtitle_set.count():
             return True
-        init_with_subtitles_from_youtube( video.id, subs_from_youtube)
-        if category:
+
+        if subs_from_youtube:
+            init_with_subtitles_from_youtube( video.id, subs_from_youtube)
+        else:
+            video_init_subtitles(video.id)
+            if video.subtitle_set.count():
+                category+= '-RAW_TEXT_TO_SPEECH'
+
+        if category:                
             category_instance = Category.objects.get_or_create(name = category)[0]
             category_instance.save()
             video.category = category_instance
@@ -201,6 +207,9 @@ def get_subtitles_from_youtube( video_id, languages =  [ 'iw',  'en', 'ar']):
 
 
 def init_with_subtitles_from_youtube( video_instance_id, subs_from_youtube = None):
+    if None == subs_from_youtube:
+        return None
+
 
     try:
         video = Video.objects.get(id=video_instance_id)
