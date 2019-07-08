@@ -9,6 +9,7 @@ from .models import *
 class VideoAdmin(admin.ModelAdmin):
     list_per_page = 20
     list_display = ( 'id','name','description', 'url','language_identifier', 'youtube_channel','category')
+#    search_fields  = [ 'id','name','description', 'url','language_identifier', 'youtube_channel','category']
     ordering = ['id']
     pass
 

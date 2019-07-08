@@ -109,6 +109,9 @@ def proccess_row(row ):
             video_init_subtitles(video.id)
             if video.subtitle_set.count():
                 category+= '-RAW_TEXT_TO_SPEECH'
+            else:
+                video.delete()
+                return
 
         if category:                
             category_instance = Category.objects.get_or_create(name = category)[0]
@@ -167,6 +170,9 @@ def init_subtitles_from_srt_file( name_of_file , video_instance_id = None, encod
     try:
         subs = pysrt.open(name_of_file, encoding=encoding)
     except TypeError:
+        print( "srt file not found")
+        return None
+    except FileNotFoundError:
         print( "srt file not found")
         return None
 
