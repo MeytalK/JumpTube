@@ -132,8 +132,19 @@ def jump(request):
     print( 'request.GET', request.GET)
     print( 'request.GET', request.GET.get('v'))
     print( 'request.GET', request.GET.get('from_youtube'))
+    if request.GET.get('v'):
+        url_query = "https://www.youtube.com/watch?v=" + request.GET.get('v')
+        print('resolved', url_query)
+    else:
+        url_query = request.GET.get('from_youtube')
 
-    video = Video.objects.create( url = url)
+    
+   
+    url_query  = request.GET.get('from_youtube')
+    #video = Video.objects.get_or_create( url = url_query)[0]
+
+
+    video = Video.objects.create( url = url_query)
     video.save()
     lang  = request.GET.get('lang')
 
