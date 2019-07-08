@@ -129,13 +129,16 @@ def video_init_from_youtube(request, pk):
 
 
 def jump(request):
-    url_query  = request.GET.get('from_youtube')
-    #video = Video.objects.get_or_create( url = url_query)[0]
-    video = Video.objects.create( url = url_query)
+    print( 'request.GET', request.GET)
+    print( 'request.GET', request.GET.get('v'))
+    print( 'request.GET', request.GET.get('from_youtube'))
+
+    video = Video.objects.create( url = url)
     video.save()
     lang  = request.GET.get('lang')
 
     print( 'request.GET', request.GET)
+    
 
     #if lang:
     #    lang_list = []

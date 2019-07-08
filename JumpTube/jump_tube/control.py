@@ -44,7 +44,8 @@ def video_init_subtitles( video_instance_id, encoding = 'utf-8', language_identi
         srt_file = video.srt_file.path        
     else:
         if video.url:
-            if  init_subtitles_from_youtube(video.id, languages = [lang]):
+            #if  init_subtitles_from_youtube(video.id, languages = [lang]):
+            if  init_subtitles_from_youtube(video.id):
                 return video.id
             srt_file = get_srt_from_youtube(url = video.url, lang = lang)
         else:
