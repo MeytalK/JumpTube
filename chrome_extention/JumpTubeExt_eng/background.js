@@ -8,7 +8,7 @@
 chrome.browserAction.onClicked.addListener(function(tab) {
 	
 	
-	var action_url = "http://127.0.0.1:8000/jump/?lang=iw&from_youtube=" + tab.url;
+	var action_url = "http://127.0.0.1:8000/jump/?lang=en&from_youtube=" + tab.url;
 //	var action_url = "http://127.0.0.1:8000/jump/?lang=" + lang + "&from_youtube=" + tab.url;
 	//window.alert(lang, action_url);
 	chrome.tabs.update(tab.id, { url: action_url });

@@ -1,5 +1,5 @@
 {
-  "name": "Jump To JumpTube",
+  "name": "Hebrew Jump To JumpTube",
   "description": "View this video as jumptube",
   "version": "1.2",
   "background": {
@@ -13,7 +13,7 @@
 	"https://www.youtube.com/*"
   ],
   "browser_action": {
-      "default_title": "View In JumpTube",
+      "default_title": "Hebrew View In JumpTube",
       "default_icon": "jumpTube_16x16.png"
   },
   "manifest_version": 2

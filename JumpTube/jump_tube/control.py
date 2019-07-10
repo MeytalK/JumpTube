@@ -248,7 +248,7 @@ def init_with_subtitles_from_youtube( video_instance_id, subs_from_youtube = Non
 
 
 
-def init_subtitles_from_youtube( video_instance_id, languages =  [ 'iw',  'en', 'ar']):
+def init_subtitles_from_youtube( video_instance_id, languages =  [ 'iw',  'en', 'ar','de']):
     try:
         video = Video.objects.get(id=video_instance_id)
     except Video.DoesNotExist:
