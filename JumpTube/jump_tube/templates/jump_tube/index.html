@@ -15,7 +15,7 @@
 
     <title>{{ video.name }}</title>
    </head>
-  <body>
+  <body >
            <style>
 
 .overflow-auto1 {
@@ -298,7 +298,6 @@ div.fixed {
 </div>
 
 
-</div>
 
 
 
@@ -355,6 +354,7 @@ div.fixed {
           <br>
     
            {% endif %}
+          {% if user.is_authenticated %}
 
     <script type="text/javascript">
     var tag = document.createElement('script');
@@ -408,7 +408,7 @@ div.fixed {
     
     
 </script>
-
+{% endif %}
         
     <div id=" = 'spherical-properties-button'">
 
@@ -418,18 +418,10 @@ div.fixed {
       </div>
 
 
-      </div>
-  </div>
+
    
     <script type="text/javascript">
-      // 2. This code loads the IFrame Player API code asynchronously.
-      var tag = document.createElement('script');
-
-      tag.src = "https://www.youtube.com/iframe_api";
-      var firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-            
+               
     
        var spParam = {};
        {% if initial_subtitle %}
@@ -443,7 +435,19 @@ div.fixed {
             spParam['roll' ] = {{video.roll  }};
             spParam['fov'  ] = {{video.fov   }};
         {% endif %}
-    
+
+      // 2. This code loads the IFrame Player API code asynchronously.
+        
+         var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      //tag.src="{% static 'jump_tube/yt_player_api/player_api' %}"
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        
+     
+           
       // 3. This function creates an <iframe> (and YouTube player)
       //    after the API code downloads.
       var player;
@@ -451,6 +455,7 @@ div.fixed {
         player = new YT.Player('player', {
           height: '390',
           width: '640',
+        
           videoId: '{{video_id}}',
            events: {
             'onReady': onPlayerReady,
