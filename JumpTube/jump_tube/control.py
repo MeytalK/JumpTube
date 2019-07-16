@@ -10,11 +10,16 @@ import os
 from JumpTube import settings
 from django.core.files.storage import FileSystemStorage
 import csv
+import traceback
+import datetime
+
+
+def func_name():
+    return traceback.extract_stack(None, 2)[0][2]
 
 
 def get_seconds(time):
     return (time.hours * 3600 + time.minutes * 60 + time.seconds + time.milliseconds/1000.0)
-
 
 
 def create_video( url = u'',  name = u'', description = u'', srt_file = None, video_file = None, audio_file = None , encoding = 'utf-8', lang = 'iw'):
@@ -191,6 +196,30 @@ def init_subtitles_from_srt_file( name_of_file , video_instance_id = None, encod
         return video.id
 
     return None
+
+
+def get_srt_file_from_video( name_of_file , video_instance_id = None, encoding = 'utf-8'):
+    
+    try:
+        video = Video.objects.get(id=video_instance_id)
+    except Video.DoesNotExist:
+        print( "video not found:" + name_of_file)
+        return None
+
+    subs = pysrt.SubRipFile()
+    index = 1
+         
+    for s in video.subtitle_set.all().order_by('starting_in_seconds'):
+        new_srt = pysrt.SubRipItem()
+        new_srt.text  = s.text
+        new_srt.index = index
+        new_srt.start = pysrt.SubRipTime(seconds = s.starting_in_seconds)
+        new_srt.end =   new_srt.start +   pysrt.SubRipTime(seconds = s.duration_in_seconds)
+        subs.append(new_srt)
+        index+=1
+
+    subs.save(name_of_file)
+
 
 
 

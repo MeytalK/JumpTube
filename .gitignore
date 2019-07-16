@@ -9,6 +9,13 @@ Thumbs.db
 *.pot
 *.mkv
 *.MKV
+*.part
+*.PART
+*.ytdl
+*.YTDL
+*.webcam
+*.srt
+*.SRT
 local_settings.py
 db.sqlite3
 migrations/
