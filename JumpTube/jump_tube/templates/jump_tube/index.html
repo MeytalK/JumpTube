@@ -196,6 +196,7 @@ div.fixed {
 
    // load_video({{video.id}});
 
+
 </script>
 <div class="d-md-flex flex-row-reverse h-md-100 align-items-center">
 
@@ -212,8 +213,14 @@ div.fixed {
              <div class="embed-responsive embed-responsive-16by9">
 
              <div class="embed-responsive-item" id="player"></div>
-
+                 
             </div>
+                
+                 <button id="go_to" class="new btn btn-info px-1 py-1 text-center btn-lg" onclick=
+                           "set_focus_to_current_time( player.getCurrentTime());"
+                           >
+                 goto subtitle
+                       </button>
           </div>
 
     </div>
@@ -501,6 +508,89 @@ div.fixed {
        
       }
 	  
+        
+    function set_focus_to_current_time(current_time )
+    {
+    {% if subs %}
+    var spParams = {};
+       
+   
+       {% for s in subs %}
+           {% if forloop.first %}
+               var prev_subtitle_id   = {{s.id   }};
+               var prev_subtitle_yaw  = {{s.yaw  }};
+               var prev_subtitle_pitch= {{s.pitch}};
+               var prev_subtitle_roll = {{s.roll }};
+               var prev_subtitle_fov  = {{s.fov  }};
+
+               spParams = {};
+               spParam['yaw'  ]= {{s.yaw  }};
+               spParam['pitch']= {{s.pitch}};
+               spParam['roll' ]= {{s.roll }};
+               spParam['fov'  ]= {{s.fov  }};
+        
+document.getElementById("myForm").elements.item(1).value= {{s.yaw  }};
+document.getElementById("myForm").elements.item(2).value= {{s.pitch}};
+document.getElementById("myForm").elements.item(3).value= {{s.roll }};
+document.getElementById("myForm").elements.item(4).value= {{s.fov  }};
+           {% else %}    
+               if( {{s.starting_in_seconds}} > current_time )
+               {	
+                   if(isPlayer360())
+                   {
+                        
+                        
+
+
+
+                      
+                     //  spParam['yaw'  ] = parseFloat(prev_subtitle_yaw  );
+                     //  spParam['pitch'] = parseFloat(prev_subtitle_pitch);
+                     //  spParam['roll' ] = parseFloat(prev_subtitle_roll );
+                     //  spParam['fov'  ] = parseFloat(prev_subtitle_fov  );
+               
+         //player.pauseVideo();
+        myFunction();
+                       //player.setSphericalProperties(spParams);
+           //           player.playVideo();
+      
+                   }
+  //      console.log(   'doing'    );
+  //  console.log(   prev_subtitle_id    );
+  //                 console.log(   prev_subtitle_yaw    + 5.7 );
+  //                 console.log(   prev_subtitle_pitch  + 5.7 );
+  //                 console.log(   prev_subtitle_roll   + 5.7 );
+  //                 console.log(   prev_subtitle_fov    + 5.7 );
+                   document.getElementById("sb-" + String(prev_subtitle_id)).focus();
+                   return;
+               }
+               else
+               {
+                   prev_subtitle_id   = {{s.id   }};
+                   prev_subtitle_yaw  = {{s.yaw  }};
+                   prev_subtitle_pitch= {{s.pitch}};
+                   prev_subtitle_roll = {{s.roll }};
+                   prev_subtitle_fov  = {{s.fov  }};
+
+
+document.getElementById("myForm").elements.item(1).value= {{s.yaw  }};
+document.getElementById("myForm").elements.item(2).value= {{s.pitch}};
+document.getElementById("myForm").elements.item(3).value= {{s.roll }};
+document.getElementById("myForm").elements.item(4).value= {{s.fov  }};
+        spParams = {};
+        spParam['yaw'  ]= {{s.yaw  }};
+        spParam['pitch']= {{s.pitch}};
+        spParam['roll' ]= {{s.roll }};
+        spParam['fov'  ]= {{s.fov  }};
+
+                   
+
+               }
+           {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    }//function set_focus_to_current_time
 
     </script>
 

@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.20','127.0.0.1','10.0.0.42']
+ALLOWED_HOSTS = ['192.168.1.20','127.0.0.1','10.0.0.42', '192.168.1.22', '3.130.103.154']
 
 # Application references
 # https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-INSTALLED_APPS
