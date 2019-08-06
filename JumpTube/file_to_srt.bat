@@ -1,4 +1,4 @@
-set PHYPATH=D:\Projects\git_clones\JumpTube\JumpTube\python_env_for_autosub\Python27
+set PHYPATH=%JUMPTUBE_ROOT_DIR%\JumpTube\JumpTube\python_env_for_autosub\Python27
 set PATH=%PHYPATH%;%PHYPATH%\Scripts;%PATH%
 echo on 
 echo cd is:---
