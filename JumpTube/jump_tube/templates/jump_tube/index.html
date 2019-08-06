@@ -512,9 +512,7 @@ div.fixed {
     function set_focus_to_current_time(current_time )
     {
     {% if subs %}
-    var spParams = {};
-       
-   
+      
        {% for s in subs %}
            {% if forloop.first %}
                var prev_subtitle_id   = {{s.id   }};
@@ -523,46 +521,21 @@ div.fixed {
                var prev_subtitle_roll = {{s.roll }};
                var prev_subtitle_fov  = {{s.fov  }};
 
-               spParams = {};
-               spParam['yaw'  ]= {{s.yaw  }};
-               spParam['pitch']= {{s.pitch}};
-               spParam['roll' ]= {{s.roll }};
-               spParam['fov'  ]= {{s.fov  }};
-        
-document.getElementById("myForm").elements.item(1).value= {{s.yaw  }};
-document.getElementById("myForm").elements.item(2).value= {{s.pitch}};
-document.getElementById("myForm").elements.item(3).value= {{s.roll }};
-document.getElementById("myForm").elements.item(4).value= {{s.fov  }};
+
            {% else %}    
                if( {{s.starting_in_seconds}} > current_time )
                {	
                    if(isPlayer360())
-                   {
-                        
-                        
-
-
-
-                      
-                     //  spParam['yaw'  ] = parseFloat(prev_subtitle_yaw  );
-                     //  spParam['pitch'] = parseFloat(prev_subtitle_pitch);
-                     //  spParam['roll' ] = parseFloat(prev_subtitle_roll );
-                     //  spParam['fov'  ] = parseFloat(prev_subtitle_fov  );
-               
-         //player.pauseVideo();
-        myFunction();
-                       //player.setSphericalProperties(spParams);
-           //           player.playVideo();
-      
-                   }
-  //      console.log(   'doing'    );
-  //  console.log(   prev_subtitle_id    );
-  //                 console.log(   prev_subtitle_yaw    + 5.7 );
-  //                 console.log(   prev_subtitle_pitch  + 5.7 );
-  //                 console.log(   prev_subtitle_roll   + 5.7 );
-  //                 console.log(   prev_subtitle_fov    + 5.7 );
-                   document.getElementById("sb-" + String(prev_subtitle_id)).focus();
-                   return;
+                    {
+                        var sphericalProperties = {};
+                        sphericalProperties['yaw'  ] = parseFloat(prev_subtitle_yaw  );
+                        sphericalProperties['pitch'] = parseFloat(prev_subtitle_pitch);
+                        sphericalProperties['roll' ] = parseFloat(prev_subtitle_roll );
+                        sphericalProperties['fov'  ] = parseFloat(prev_subtitle_fov  );
+                        player.setSphericalProperties(sphericalProperties);
+                    }
+                    document.getElementById("sb-" + String(prev_subtitle_id)).focus();
+                    return;
                }
                else
                {
@@ -572,18 +545,6 @@ document.getElementById("myForm").elements.item(4).value= {{s.fov  }};
                    prev_subtitle_roll = {{s.roll }};
                    prev_subtitle_fov  = {{s.fov  }};
 
-
-document.getElementById("myForm").elements.item(1).value= {{s.yaw  }};
-document.getElementById("myForm").elements.item(2).value= {{s.pitch}};
-document.getElementById("myForm").elements.item(3).value= {{s.roll }};
-document.getElementById("myForm").elements.item(4).value= {{s.fov  }};
-        spParams = {};
-        spParam['yaw'  ]= {{s.yaw  }};
-        spParam['pitch']= {{s.pitch}};
-        spParam['roll' ]= {{s.roll }};
-        spParam['fov'  ]= {{s.fov  }};
-
-                   
 
                }
            {% endif %}
@@ -630,6 +591,7 @@ document.getElementById("myForm").elements.item(4).value= {{s.fov  }};
         //  document.getElementById("demo").innerHTML = parseInt(x);
         var sphericalProperties = {};
         sphericalProperties['yaw'  ] = parseFloat(document.getElementById("myForm").elements.item(1).value);
+        //sphericalProperties['yaw'  ] = document.getElementById("myForm").elements.item(1).value;
         sphericalProperties['pitch'] = parseFloat(document.getElementById("myForm").elements.item(2).value);
         sphericalProperties['roll' ] = parseFloat(document.getElementById("myForm").elements.item(3).value);
         sphericalProperties['fov'  ] = parseFloat(document.getElementById("myForm").elements.item(4).value);
