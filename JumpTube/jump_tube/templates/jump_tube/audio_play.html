@@ -1,5 +1,5 @@
 ﻿<!doctype html>
-<html lang="en" dir="rtl">
+<html lang="en" dir="ltr">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -218,8 +218,14 @@ div.fixed {
 
                         </audio>
                     </div>
+                 
 
                 </div>
+                <button id="go_to" class="new btn btn-info px-1 py-1 text-center btn-lg" onclick=
+                           "set_focus_to_current_time( vid.currentTime);"
+                           >
+                 goto subtitle
+                       </button>
           </div>
 
     </div>
@@ -436,6 +442,41 @@ div.fixed {
  	       
       
 	  
+    function set_focus_to_current_time(current_time )
+    {
+    {% if subs %}
+              
+       {% for s in subs %}
+           {% if forloop.first %}
+               var prev_subtitle_id   = {{s.id   }};
+               var prev_subtitle_yaw  = {{s.yaw  }};
+               var prev_subtitle_pitch= {{s.pitch}};
+               var prev_subtitle_roll = {{s.roll }};
+               var prev_subtitle_fov  = {{s.fov  }};
+
+
+           {% else %}    
+               if( {{s.starting_in_seconds}} > current_time )
+               {	
+                   
+                    document.getElementById("sb-" + String(prev_subtitle_id)).focus();
+                    return;
+               }
+               else
+               {
+                   prev_subtitle_id   = {{s.id   }};
+                   prev_subtitle_yaw  = {{s.yaw  }};
+                   prev_subtitle_pitch= {{s.pitch}};
+                   prev_subtitle_roll = {{s.roll }};
+                   prev_subtitle_fov  = {{s.fov  }};
+
+
+               }
+           {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    }//function set_focus_to_current_time
 
     </script>
 

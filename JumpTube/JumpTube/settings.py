@@ -117,6 +117,9 @@ REST_FRAMEWORK = {
     ]
 }
 
+
+LOGIN_URL = '/login/'
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 LANGUAGE_CODE = 'en-us'

@@ -6,6 +6,7 @@ from datetime import datetime
 from django.urls import path
 from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
+#from django.contrib.auth import ur
 from app import forms
 from app import views as app_views
 from jump_tube import views , models, api
@@ -23,8 +24,8 @@ router.register(r'subtitles',    api.SubTitleViewSet)
 
 urlpatterns = [
    # path('', include(('jump_tube.urls', "jump_tube"), "jump_tube_urls")),
-    #path('', views.home, name='home'),
     path('', views.home, name='home'),
+    #path('', app_views.home, name='home'),
     path('video_play/<int:pk>/', views.video_play, name='video_play'),
     path('subtitle_play/<int:pk>/', views.subtitle_play, name='subtitle_play'),
     path('video_init_from_srt/<int:pk>/', views.video_init_from_srt, name='video_init_from_srt'),
@@ -48,16 +49,18 @@ urlpatterns = [
 
     path('contact/', app_views.contact, name='contact'),
     path('about/', app_views.about, name='about'),
+    #path('login/', login, name="login"),
     path('login/',
          LoginView.as_view
          (
-             template_name='app/login.html',
+             template_name='jump_tube/login.html',
              authentication_form=forms.BootstrapAuthenticationForm,
-             extra_context=
-             {
-                 'title': 'Log in',
-                 'year' : datetime.now().year,
-             }
+             redirect_authenticated_user = True,
+             #extra_context=
+             #{
+             #    'title': 'Log in',
+             #    'year' : datetime.now().year,
+             #}
          ),
          name='login'),
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),

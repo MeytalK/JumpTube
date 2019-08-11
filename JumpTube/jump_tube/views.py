@@ -12,6 +12,10 @@ from .models import SubTitle, Video
 from .control import init_subtitles_from_srt_file, init_subtitles_from_youtube, get_srt_from_youtube, video_init_subtitles
 from JumpTube import settings
 from django.http import HttpResponse
+from django.conf import settings
+from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
+
 
 def home(request):
     """Renders the home page."""
@@ -28,8 +32,12 @@ def home(request):
     #    }
     #)
 
-
+@login_required
 def video_play(request, pk):
+    #if not request.user.is_authenticated:
+    #    print( 'request.path', request.path)
+    #    return redirect('/accounts/login/?next_page=' +  request.path)
+
     try:
         video = Video.objects.get(id=int(pk))
     except Video.DoesNotExist:
@@ -94,7 +102,7 @@ def subtitle_play(request, pk):
 
 
 
-
+@login_required
 def video_delete_all_subtitles(request, pk):
     try:
         video = Video.objects.get(id=int(pk))
@@ -106,6 +114,7 @@ def video_delete_all_subtitles(request, pk):
 
     return HttpResponseRedirect(reverse('video_play', args=(video.id,)))
 
+@login_required
 def video_init_from_srt(request, pk):
     try:
         video = Video.objects.get(id=int(pk))
@@ -117,6 +126,7 @@ def video_init_from_srt(request, pk):
 
     return HttpResponseRedirect(reverse('video_play', args=(video.id,)))
   
+@login_required
 def video_init_from_youtube(request, pk):
     try:
         video = Video.objects.get(id=int(pk))
@@ -127,7 +137,7 @@ def video_init_from_youtube(request, pk):
 
     return HttpResponseRedirect(reverse('video_play', args=(video.id,)))
 
-
+@login_required
 def jump(request):
     print( 'request.GET', request.GET)
     print( 'request.GET', request.GET.get('v'))
@@ -174,7 +184,7 @@ def jump(request):
 #    return HttpResponseRedirect(url_query)
 
 
-
+@login_required
 def subtitle_set_360_parameters(request, pk):
     try:
         subtitle = SubTitle.objects.get(id=int(pk))
@@ -197,7 +207,7 @@ def subtitle_set_360_parameters(request, pk):
 
     return HttpResponseRedirect(reverse('video_play', args=(subtitle.video.id,))  + '?subtitle=' +str(subtitle.id))
 
-
+@login_required
 def video_add_subtitle(request, pk):
     try:
         video = Video.objects.get(id=int(pk))
