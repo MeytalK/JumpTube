@@ -1,4 +1,7 @@
 !youtube-dl.exe
+#visual studio
+.vs/
+*.sln
 #ignore thumbnails created by windows
 Thumbs.db
 *.mp4
