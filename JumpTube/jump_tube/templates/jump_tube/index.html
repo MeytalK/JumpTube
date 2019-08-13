@@ -234,7 +234,7 @@ div.fixed {
 
         <div id="scroll" class="" >
                 	<a class="new btn btn-info" href="{% url 'video_list' %}"> לרשימת הסרטים</a> 
-     {% if user.is_authenticated %}
+     {% if user.is_staff %}
                 	<a class="new btn btn-info" href="/admin/jump_tube/video/" target="_blank">See all videos</a> 
     
     {% endif %}
@@ -267,7 +267,7 @@ div.fixed {
                        {{s.text}}
                        </button>
                 
-                {% if user.is_authenticated %}
+                {% if user.is_staff %}
             <br>
                             
                            <a class="new btn btn-info" href="/admin/jump_tube/subtitle/{{s.id}}" >edit</a> 
@@ -325,7 +325,7 @@ div.fixed {
     font-size: 12px;
   }
 </style>
-          {% if user.is_authenticated %}
+          {% if user.is_staff %}
 <!-- Display spherical property values and enable user to update them. -->
 <table style="border: 0; width: 640px;">
   <tr style="background: #fff;">
@@ -349,7 +349,7 @@ div.fixed {
       <input type="text" id="fov-property" style="width: 80px"><br>
       <div id="fov-current-value" class="current-values"> </div>
     </td>
-       {% if user.is_authenticated %}
+       {% if user.is_staff %}
     <td style="vertical-align: bottom;">
       <button id="spherical-properties-button">Update properties</button>
     </td>
@@ -363,7 +363,7 @@ div.fixed {
           <br>
     
            {% endif %}
-          {% if user.is_authenticated %}
+          {% if user.is_staff %}
 
     <script type="text/javascript">
     var tag = document.createElement('script');
@@ -555,7 +555,7 @@ div.fixed {
 
     </script>
 
-        {% if user.is_authenticated %}
+        {% if user.is_staff %}
           
 <div class="row" id='debug'>
    

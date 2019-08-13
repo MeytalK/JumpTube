@@ -12,6 +12,10 @@ from django.core.files.storage import FileSystemStorage
 import csv
 import traceback
 import datetime
+import logging
+import subprocess
+
+logger = logging.getLogger(__name__)
 
 
 def func_name():
@@ -49,7 +53,6 @@ def video_init_subtitles( video_instance_id, encoding = 'utf-8', language_identi
         srt_file = video.srt_file.path        
     else:
         if video.url:
-            #if  init_subtitles_from_youtube(video.id, languages = [lang]):
             if  init_subtitles_from_youtube(video.id):
                 return video.id
             srt_file = get_srt_from_youtube(url = video.url, lang = lang)
@@ -60,13 +63,10 @@ def video_init_subtitles( video_instance_id, encoding = 'utf-8', language_identi
                 if video.audio_file:
                     srt_file = file_mp3_to_srt( video.audio_file.path, lang)
 
-    
     print ( 'srt_file', srt_file)
     if srt_file:
         init_subtitles_from_srt_file( srt_file, video.id, encoding = encoding)
-        print( 's ' , srt_file, 'v', video.srt_file)
         if not video.srt_file :
-            print( 'del of ', srt_file)
             os.system("del " + srt_file + " -y")
 
 
@@ -316,9 +316,16 @@ def init_subtitles_from_youtube( video_instance_id, languages =  [ 'iw',  'en', 
 def get_srt_from_youtube( url, lang = 'iw' ):
     video_id = url[len( 'https://www.youtube.com/watch?v='):]
     file_name = video_id + ".srt"
-
-    os.system("C:\Windows\System32\cmd.exe /c youtube_to_srt.bat " + video_id + " " + lang)
-
+    
+#    output = subprocess.check_output("C:\inetpub\wwwroot\JumpTube\JumpTube\youtube_to_srt.bat " + video_id + " " + lang,  stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL)
+    os.chdir( os.environ['JUMPTUBE_ROOT_DIR'] + '\JumpTube\JumpTube')
+    output = subprocess.check_output("youtube_to_srt.bat " + video_id + " " + lang,  stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL)
+    
+    output_lines = output.decode().splitlines()
+    
+    for line in output_lines:
+        logger.debug(line)
+   
     return file_name
 
 
@@ -326,8 +333,17 @@ def get_srt_from_youtube( url, lang = 'iw' ):
 def file_to_srt( mp4_file_name, lang = 'iw' ):
     
     file_name = mp4_file_name + ".srt"
+    logger.debug( func_name(), lang)
 
-    os.system("C:\Windows\System32\cmd.exe /c file_to_srt.bat " + mp4_file_name + " " + lang)
+    #os.system("C:\Windows\System32\cmd.exe /c file_to_srt.bat " + mp4_file_name + " " + lang)
+    
+    os.chdir( os.environ['JUMPTUBE_ROOT_DIR'] + '\JumpTube\JumpTube')
+    output = subprocess.check_output("file_to_srt.bat " + mp4_file_name + " " + lang,  stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL)
+    
+    output_lines = output.decode().splitlines()
+    
+    for line in output_lines:
+        logger.debug(line)
 
     return file_name
 
@@ -335,8 +351,14 @@ def file_to_srt( mp4_file_name, lang = 'iw' ):
 def file_mp4_to_srt( mp4_file_name, lang = 'iw' ):
     
     file_name = mp4_file_name[:len(mp4_file_name)-len('.mp4')] + ".srt"
-
-    os.system("C:\Windows\System32\cmd.exe /c file_to_srt.bat " + mp4_file_name + " " + lang)
+    #os.system("C:\Windows\System32\cmd.exe /c file_to_srt.bat " + mp4_file_name + " " + lang)
+    os.chdir( os.environ['JUMPTUBE_ROOT_DIR'] + '\JumpTube\JumpTube')
+    output = subprocess.check_output("file_to_srt.bat " + mp4_file_name + " " + lang,  stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL)
+    
+    output_lines = output.decode().splitlines()
+    
+    for line in output_lines:
+        logger.debug(line)
 
     return file_name
 
@@ -346,7 +368,14 @@ def file_mp3_to_srt( mp3_file_name, lang = 'iw' ):
     
     file_name = mp3_file_name[:len(mp3_file_name)-len('.mp3')] + ".srt"
 
-    os.system("C:\Windows\System32\cmd.exe /c file_to_srt.bat " + mp3_file_name + " " + lang)
+    #os.system("C:\Windows\System32\cmd.exe /c file_to_srt.bat " + mp3_file_name + " " + lang)
+    os.chdir( os.environ['JUMPTUBE_ROOT_DIR'] + '\JumpTube\JumpTube')
+    output = subprocess.check_output("file_to_srt.bat " + mp3_file_name + " " + lang,  stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL)
+    
+    output_lines = output.decode().splitlines()
+    
+    for line in output_lines:
+        logger.debug(line)
 
     return file_name
 
@@ -356,7 +385,14 @@ def youtube_to_file( url, lang = 'iw' ):
     video_id = url[len( 'https://www.youtube.com/watch?v='):]
     file_name = video_id + ".srt"
 
-    os.system("C:\Windows\System32\cmd.exe /c youtube_to_file.bat " + video_id+ " " + lang)
+    #os.system("C:\Windows\System32\cmd.exe /c youtube_to_file.bat " + video_id+ " " + lang)
+    os.chdir( os.environ['JUMPTUBE_ROOT_DIR'] + '\JumpTube\JumpTube')
+    output = subprocess.check_output("youtube_to_file.bat " + video_id+ " " + lang,  stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL)
+    
+    output_lines = output.decode().splitlines()
+    
+    for line in output_lines:
+        logger.debug(line)
 
     return video_id
 
@@ -365,7 +401,14 @@ def youtube_to_file_video( url, lang = 'iw' ):
     video_id = url[len( 'https://www.youtube.com/watch?v='):]
     file_name = video_id + ".srt"
 
-    os.system("C:\Windows\System32\cmd.exe /c youtube_to_file.bat " + video_id+ " " + lang)
+    #os.system("C:\Windows\System32\cmd.exe /c youtube_to_file.bat " + video_id+ " " + lang)
+    os.chdir( os.environ['JUMPTUBE_ROOT_DIR'] + '\JumpTube\JumpTube')
+    output = subprocess.check_output("youtube_to_file.bat " + video_id+ " " + lang,  stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL)
+    
+    output_lines = output.decode().splitlines()
+    
+    for line in output_lines:
+        logger.debug(line)
 
     return video_id
 
@@ -375,7 +418,14 @@ def youtube_to_file_audio( url, lang = 'iw' ):
     video_id = url[len( 'https://www.youtube.com/watch?v='):]
     file_name = video_id + ".srt"
 
-    os.system("C:\Windows\System32\cmd.exe /c youtube_to_file.bat " + video_id + " " + lang)
+    #os.system("C:\Windows\System32\cmd.exe /c youtube_to_file.bat " + video_id + " " + lang)
+    os.chdir( os.environ['JUMPTUBE_ROOT_DIR'] + '\JumpTube\JumpTube')
+    output = subprocess.check_output("youtube_to_file.bat " + video_id + " " + lang,  stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL)
+    
+    output_lines = output.decode().splitlines()
+    
+    for line in output_lines:
+        logger.debug(line)
 
     return video_id
 
