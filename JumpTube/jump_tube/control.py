@@ -316,15 +316,14 @@ def init_subtitles_from_youtube( video_instance_id, languages =  [ 'iw',  'en', 
 def get_srt_from_youtube( url, lang = 'iw' ):
     video_id = url[len( 'https://www.youtube.com/watch?v='):]
     file_name = video_id + ".srt"
+    os.system("C:\Windows\System32\cmd.exe /c youtube_to_srt.bat " + video_id + " " + lang)
+    #output = subprocess.check_output("C:\inetpub\wwwroot\JumpTube\JumpTube\youtube_to_srt.bat " + video_id + " " + lang,  stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL)
+    #os.chdir( os.environ['JUMPTUBE_ROOT_DIR'] + '\JumpTube\JumpTube')
+    #output = subprocess.check_output("youtube_to_srt.bat " + video_id + " " + lang,  stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL, shell=True)   
+    #output_lines = output.decode().splitlines()
     
-#    output = subprocess.check_output("C:\inetpub\wwwroot\JumpTube\JumpTube\youtube_to_srt.bat " + video_id + " " + lang,  stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL)
-    os.chdir( os.environ['JUMPTUBE_ROOT_DIR'] + '\JumpTube\JumpTube')
-    output = subprocess.check_output("youtube_to_srt.bat " + video_id + " " + lang,  stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL)
-    
-    output_lines = output.decode().splitlines()
-    
-    for line in output_lines:
-        logger.debug(line)
+    #for line in output_lines:
+    #    logger.debug(line)
    
     return file_name
 

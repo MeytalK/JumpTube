@@ -1,0 +1,9 @@
+<ul>
+{% if user.is_authenticated %}
+    <li><a href="{% url 'logout' %}">Log out</a></li>
+    <li>Hello {{ user.get_full_name|default:user.username }}!</li>
+{% else %}
+    <li><a href="{% url 'login' %}">Log in</a></li>
+</ul>
+
+{% endif %}

@@ -59,6 +59,7 @@ def video_play(request, pk):
             'jump_tube/video_play.html',
            # 'jump_tube/tmp.html',
             {
+            'page_name':video.name,
             'subs':video.subtitle_set.all().order_by('starting_in_seconds'),
             'video':video ,
             'initial_subtitle': initial_subtitle,
@@ -70,6 +71,7 @@ def video_play(request, pk):
         request,
         'jump_tube/audio_play.html',
         {
+            'page_name':video.name,
             'subs':video.subtitle_set.all().order_by('starting_in_seconds'),
             'video':video ,
             'initial_subtitle': initial_subtitle,
@@ -79,8 +81,10 @@ def video_play(request, pk):
 
     return render(
         request,
-        'jump_tube/index.html',
+        #'jump_tube/index.html',
+        'jump_tube/youtube_play.html',
         {
+            'page_name':video.name,
             'video_id':video.url[len( 'https://www.youtube.com/watch?v='):],
             'subs':video.subtitle_set.all().order_by('starting_in_seconds'),
             'video':video ,

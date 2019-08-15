@@ -1,21 +1,6 @@
-﻿<!doctype html>
-<html lang="en" dir="rtl">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      {% load staticfiles %}
-    <!-- Bootstrap CSS -->
+﻿{% extends "jump_tube/layout.html" %}
 
-    <link rel="stylesheet" type="text/css" href="{% static 'jump_tube/bootstrap-4.3.1-dist/css/bootstrap.min.css' %}" />
-
-      
-<script src="{% static 'jump_tube/bootstrap-4.3.1-dist/js/bootstrap.min.js' %}" ></script>
-
-
-    <title>רשימת הסרטים</title>
-   </head>
-  <body>
+{% block content %}
 
       <div class="row">
           <center>
@@ -40,5 +25,5 @@
               </div>
               </center>
           </div>
-  </body>
-</html>
+ {% endblock %}
+

@@ -8,6 +8,7 @@
 chrome.browserAction.onClicked.addListener(function(tab) {
 	
 	var action_url = "http://54.77.131.108";
+//	var action_url = "http://127.0.0.1:8000";
 	action_url += "/jump/?lang=iw&from_youtube=" + tab.url;
 //	var action_url = "http://127.0.0.1:8000/jump/?lang=iw&from_youtube=" + tab.url;
 //	var action_url = "http://127.0.0.1:8000/jump/?lang=" + lang + "&from_youtube=" + tab.url;

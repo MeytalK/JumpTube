@@ -7,6 +7,10 @@ Thumbs.db
 *.mp4
 *.MP4
 *.exe
+*.webcam
+*.WEBCAM
+*.m4a
+*.M4A
 #ignore by django
 *.sqlite3
 *.log
