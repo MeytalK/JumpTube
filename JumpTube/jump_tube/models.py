@@ -134,7 +134,7 @@ class Video(models.Model):
     yaw                 = models.FloatField(default   = 0.0  )
     pitch               = models.FloatField(default   = 0.0  )
     roll                = models.FloatField(default   = 0.0  )
-    fov                 = models.FloatField(default   = 100.0)
+    fov                 = models.FloatField(default   = 120.0)
     language_identifier = models.CharField( default = u'iw',max_length = 100)
     youtube_channel     = models.ForeignKey(YouTubeChannel, on_delete = models.SET_NULL, null=True, blank=True)
     category            = models.ForeignKey(Category, on_delete = models.SET_NULL, null=True, blank=True)

@@ -7,8 +7,8 @@ Thumbs.db
 *.mp4
 *.MP4
 *.exe
-*.webcam
-*.WEBCAM
+*.webm
+*.WEBM
 *.m4a
 *.M4A
 #ignore by django
@@ -61,3 +61,5 @@ jump_tube/__pycache_
 JumpTube/db.sqlite3
 JumpTube/.vs/JumpTube/v16/.suo
 JumpTube/.vs/JumpTube/v16/.suo
+.vs/JumpTube/v16/.suo
+

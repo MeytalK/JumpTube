@@ -1,6 +1,6 @@
 {
-  "name": "Jump To JumpTube",
-  "description": "View this video as jumptube",
+  "name": "Jump To Local Server JumpTube",
+  "description": "Local Server View this video as jumptube",
   "version": "1.2",
   "background": {
     "scripts": ["background.js"],

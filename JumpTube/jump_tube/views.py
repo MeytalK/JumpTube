@@ -154,7 +154,7 @@ def jump(request):
 
     
    
-    url_query  = request.GET.get('from_youtube')
+    #url_query  = request.GET.get('from_youtube')
     #video = Video.objects.get_or_create( url = url_query)[0]
 
 
