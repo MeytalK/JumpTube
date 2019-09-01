@@ -247,7 +247,7 @@ div.fixed {
                        <br>
                 {% endif %}
                        
-                       {{s.text}}
+                       {{s.text|urlize|linebreaks}}
                        </button>
                 
                 {% if user.is_staff %}

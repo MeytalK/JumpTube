@@ -5,11 +5,11 @@ Definition of views.
 
 from datetime import datetime
 from django.shortcuts import render
-from django.http import HttpRequest, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponseRedirect, HttpResponseNotAllowed
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import SubTitle, Video
-from .control import init_subtitles_from_srt_file, init_subtitles_from_youtube, get_srt_from_youtube, video_init_subtitles
+from .control import init_subtitles_from_srt_file, init_subtitles_from_youtube, get_srt_from_youtube, video_init_subtitles, video_is_user_allowed_to_watch, get_all_allowed_videos
 from JumpTube import settings
 from django.http import HttpResponse
 from django.conf import settings
@@ -32,6 +32,21 @@ def home(request):
     #    }
     #)
 
+
+@login_required
+def video_list(request):
+    #video_list = get_all_allowed_videos( request.user.id)
+    video_list = Video.objects.all().order_by('-id') #for performance reason
+    return render(
+        request,
+        #'jump_tube/index.html',
+        'jump_tube/video_list.html',
+        {
+            'page_name':u'רשימת הסרטים',
+            'video_list':video_list,
+        }
+    )
+
 @login_required
 def video_play(request, pk):
     #if not request.user.is_authenticated:
@@ -42,6 +57,11 @@ def video_play(request, pk):
         video = Video.objects.get(id=int(pk))
     except Video.DoesNotExist:
         video = Video.objects.first()
+
+    if False == video_is_user_allowed_to_watch(video.id, request.user.id):
+        return HttpResponseNotAllowed( "אין לך הרשאה לצפות בוידאו הזה")
+    
+
 
     initial_subtitle = None
         
@@ -159,6 +179,7 @@ def jump(request):
 
 
     video = Video.objects.create( url = url_query)
+    video.owner = request.user
     video.save()
     lang  = request.GET.get('lang')
 
@@ -250,6 +271,13 @@ def jump_to_language(request, language):
 class VideoListView(ListView):
     """Renders the home page, with a list of all videos."""
     model = Video
+    queryset=Video.objects.all().order_by('-id')
+    #if  self.request.user:
+    #    queryset = get_all_allowed_videos( self.request.user.id)
+    #else:
+    #    queryset = get_all_allowed_videos( None)
+    
+
 
 class VideoDetailView(DetailView):
     """Renders the poll details page."""

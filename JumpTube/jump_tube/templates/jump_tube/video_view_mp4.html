@@ -23,7 +23,7 @@
     <a class="new btn btn-info" href="{% url 'video_list' %}">לרשימת הסרטים</a> 
                {% for s in subs %}
 
-               <button class="new btn btn-success" onclick="jump_to({{s.starting_in_seconds}});">{{s.text}}</button>
+               <button class="new btn btn-success" onclick="jump_to({{s.starting_in_seconds}});">{{s.text|urlize|linebreaks}}</button>
     <br >
                {% endfor %}
 

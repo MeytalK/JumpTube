@@ -40,12 +40,14 @@ urlpatterns = [
     #path('api/subtitle_set_360_fields/<int:pk>/', api.Subtit, name='subtitle_set_360_fields'),
 
     path('api/', include(router.urls)),
-    path('video_list/',
-        views.VideoListView.as_view(
-        queryset=models.Video.objects.all().order_by('-id'),
-        context_object_name='video_list',
-        template_name='jump_tube/video_list.html',),
-        name='video_list'),
+    #path('video_list/',
+    #    views.VideoListView.as_view(
+    #    context_object_name='video_list',
+    #    template_name='jump_tube/video_list.html',),
+    #    name='video_list'),
+
+    path('video_list/', views.video_list, name='video_list'),
+    
 
     path('contact/', app_views.contact, name='contact'),
     path('about/', app_views.about, name='about'),

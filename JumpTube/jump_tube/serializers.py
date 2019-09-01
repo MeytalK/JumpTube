@@ -11,11 +11,22 @@ class VideoSerializer(serializers.HyperlinkedModelSerializer):
             'url'        ,
             'name'       ,     
             'description',            
-            'from_file'  ,          
+            'from_file'  ,       
+            'audio_file' ,
             'srt_file'   ,         
             'created_at' ,           
-            'updated_at' ,     
-            'thumbnail'  ,
+            'updated_at' ,         
+            'starting_in_seconds',
+            'thumbnail'   ,
+            'yaw'         ,
+            'pitch'       ,
+            'roll'        ,
+            'language_identifier',
+            'youtube_channel',
+            'category',
+            'fov'         ,
+            'owner'       ,
+            'is_private'  ,
             )            
     
 
@@ -37,18 +48,7 @@ class SubTitleSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
-        
-
-class SubTitle360ParamsSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = SubTitle
-        fields = (
-            'yaw'                ,
-            'pitch'              ,
-            'roll'               ,
-            'fov'                ,
-        )
-
+ 
 
 class VideoWholeSerializer(serializers.ModelSerializer):
     
@@ -60,15 +60,22 @@ class VideoWholeSerializer(serializers.ModelSerializer):
             'url'        ,
             'name'       ,     
             'description',            
-            'from_file'  ,          
+            'from_file'  ,       
+            'audio_file' ,
             'srt_file'   ,         
             'created_at' ,           
-            'updated_at' ,           
+            'updated_at' ,         
+            'starting_in_seconds',
             'thumbnail'   ,
-            'yaw'                ,
-            'pitch'              ,
-            'roll'               ,
-            'fov'                ,
+            'yaw'         ,
+            'pitch'       ,
+            'roll'        ,
+            'language_identifier',
+            'youtube_channel',
+            'category',
+            'fov'         ,
+            'owner'       ,
+            'is_private'  ,
             'subtitle_set',
             )
 

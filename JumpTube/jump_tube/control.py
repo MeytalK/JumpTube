@@ -14,6 +14,10 @@ import traceback
 import datetime
 import logging
 import subprocess
+from inspect import currentframe, getframeinfo
+
+frameinfo = getframeinfo(currentframe())
+
 
 logger = logging.getLogger(__name__)
 
@@ -473,3 +477,47 @@ def get_subtitles_from_video_file( video_file):
 #            if subtitles_file_name:
 #                return subtitles_file_name
 #    return subtitles_file_name
+
+
+def video_is_user_allowed_to_watch( video_instance_id = None, user_instance_id = None):
+    try:
+        video = Video.objects.get(id=video_instance_id)
+    except Video.DoesNotExist:
+        return False
+
+    if user_instance_id != None:
+        try:
+            user = User.objects.get(id=user_instance_id)
+        except User.DoesNotExist:
+            return False
+        if video.is_private == False:
+            return True
+        if video.owner == None:
+            return True
+        if user == video.owner:
+            return True
+        if user.is_staff:
+            return True
+
+    return False
+
+def get_all_allowed_videos(  user_instance_id = None):
+    allowed_videos = []
+    if user_instance_id == None:
+        user = None
+    else:
+        try:
+            user = User.objects.get(id=user_instance_id)
+            user_instance_id = user.id
+        except User.DoesNotExist:
+            user_instance_id = None
+
+
+    for video in Video.objects.all().order_by('-id'):
+        if video_is_user_allowed_to_watch( video.id, user_instance_id):
+            allowed_videos.append(video)
+
+    return allowed_videos 
+
+
+    

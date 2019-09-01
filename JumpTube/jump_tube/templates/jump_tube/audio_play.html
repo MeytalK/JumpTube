@@ -236,7 +236,7 @@ div.fixed {
                 <img src={{s.picture.url}} class="img-thumbnail"  > 
                        <br>
                 {% endif %}
-                       {{s.text}}
+                       {{s.text|urlize|linebreaks}}
                 </button>
                 {% if user.is_authenticated %}
             <br>

@@ -138,8 +138,9 @@ class Video(models.Model):
     language_identifier = models.CharField( default = u'iw',max_length = 100)
     youtube_channel     = models.ForeignKey(YouTubeChannel, on_delete = models.SET_NULL, null=True, blank=True)
     category            = models.ForeignKey(Category, on_delete = models.SET_NULL, null=True, blank=True)
+    owner               = models.ForeignKey(User, on_delete = models.SET_NULL, null=True, blank=True, default = None)
     #language            = models.CharField( choices)
-    
+    is_private           = models.BooleanField(default   = False)
 
     def __str__(self):
         if self.url:
@@ -162,7 +163,7 @@ class SubTitle(models.Model):
     yaw                = models.FloatField(default   = 0.0  )
     pitch              = models.FloatField(default   = 0.0  )
     roll               = models.FloatField(default   = 0.0  )
-    fov                = models.FloatField(default   = 100.0  )
+    fov                = models.FloatField(default   = 120.0  )
     def __str__(self):
         return str(self.index) + ' ' + self.text
 
