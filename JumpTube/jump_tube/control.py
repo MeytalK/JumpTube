@@ -16,6 +16,7 @@ import logging
 import subprocess
 from inspect import currentframe, getframeinfo
 
+
 frameinfo = getframeinfo(currentframe())
 
 
@@ -24,6 +25,19 @@ logger = logging.getLogger(__name__)
 
 def func_name():
     return traceback.extract_stack(None, 2)[0][2]
+    
+import unicodedata
+
+from django.core.files.storage import FileSystemStorage
+
+class ASCIIFileSystemStorage(FileSystemStorage):
+    """
+    Convert unicode characters in name to ASCII characters.
+    """
+    def get_valid_name(self, name):
+        name = unicodedata.normalize('NFKD', name).encode('ascii', 'ignore')
+        return super(ASCIIFileSystemStorage, self).get_valid_name(name)
+
 
 
 def get_seconds(time):

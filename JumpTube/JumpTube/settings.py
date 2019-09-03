@@ -135,6 +135,7 @@ STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['static']))
 MEDIA_URL = '/media/'
 MEDIA_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['media']))
 
+DEFAULT_FILE_STORAGE = 'jump_tube.control.ASCIIFileSystemStorage'
 
 try:
     from .local_settings import *
