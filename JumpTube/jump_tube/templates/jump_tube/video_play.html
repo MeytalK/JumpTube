@@ -106,32 +106,15 @@ div.fixed {
     }
 
     function pick_360_parameters(subtitle_id) {
-        if(isPlayer360()){
-            let spParams = player.getSphericalProperties();
-            // construct an HTTP request
-            var xhr = new XMLHttpRequest();
-            var url = "/subtitle_set_360_parameters/" + subtitle_id + "/?yaw=" + spParams['yaw'].toFixed(4) + "&pitch=" + spParams['pitch'].toFixed(4) + "&roll=" + spParams['roll'].toFixed(4)+ "&fov=" + spParams['fov'].toFixed(4);
-            xhr.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    window.location.replace("/subtitle_play/" + String(subtitle_id) + "/");
-                }
-            };
+//For 360 player - use the youtube_play.html as a refference
 
-            xhr.open('GET', url, true);
-            xhr.send(null);                         
-        }
     }
 
 
 
     function add_subtitle(video_id) {
-        var url = "/video_add_subtitle/" + String(video_id) + "/?starting_in_seconds=" + player.getCurrentTime().toFixed(4);
-        if(isPlayer360()){
-            let spParams = player.getSphericalProperties();
-            // construct an HTTP request
-            url+= "&yaw=" + spParams['yaw'].toFixed(4) + "&pitch=" + spParams['pitch'].toFixed(4) + "&roll=" + spParams['roll'].toFixed(4)+ "&fov=" + spParams['fov'].toFixed(4);
-        }
-        
+        var url = "/video_add_subtitle/" + String(video_id) + "/?starting_in_seconds=" + vid.currentTime;
+      
         var xhr = new XMLHttpRequest();
 
         xhr.open('GET', url, true);
@@ -236,8 +219,9 @@ div.fixed {
                        <br>
                 {% endif %}
                        {{s.text|urlize|linebreaks}}
-                </button>
-                {% if user.is_authenticated %}
+                       </button>
+                
+                {% if user.is_staff %}
             <br>
                             
                            <a class="new btn btn-info" href="/admin/jump_tube/subtitle/{{s.id}}" >edit</a> 
@@ -247,9 +231,7 @@ div.fixed {
                                >
                              jump and pause
                 </button>              
-                <button  class="new btn btn-warning" onclick="pick_360_parameters({{s.id}});">
-                    Pick 360
-                </button>              
+                              
 
 
                 {% endif %}
@@ -287,37 +269,8 @@ div.fixed {
     font-size: 12px;
   }
 </style>
-          {% if user.is_authenticated %}
-<!-- Display spherical property values and enable user to update them. -->
-<table style="border: 0; width: 640px;">
-  <tr style="background: #fff;">
-    <td>
-      <label for="yaw-property">yaw:</label>
-      <input type="text" id="yaw-property" style="width: 80px"><br>
-      <div id="yaw-current-value" class="current-values"> </div>
-    </td>
-    <td>
-      <label for="pitch-property">pitch: </label>
-      <input type="text" id="pitch-property" style="width: 80px"><br>
-      <div id="pitch-current-value" class="current-values"> </div>
-    </td>
-    <td>
-      <label for="roll-property">roll: </label>
-      <input type="text" id="roll-property" style="width: 80px"><br>
-      <div id="roll-current-value" class="current-values"> </div>
-    </td>
-    <td>
-      <label for="fov-property">fov: </label>
-      <input type="text" id="fov-property" style="width: 80px"><br>
-      <div id="fov-current-value" class="current-values"> </div>
-    </td>
-       {% if user.is_authenticated %}
-    <td style="vertical-align: bottom;">
-      <button id="spherical-properties-button">Update properties</button>
-    </td>
-      {% endif %}
-  </tr>
-</table>
+          {% if user.is_staff %}
+
            <p id="demo"></p>
           <button  class="new btn btn-warning" onclick="add_subtitle({{video.id}});">
                     Add Subtitle
@@ -405,11 +358,12 @@ div.fixed {
 
     </script>
 
-        {% if user.is_authenticated %}
+        {% if user.is_staff %}
           
-<div class="row" id='debug'>
+<div class="row" id='debug_row'>
+<div id="debug_col" class="col-12 p-1">
    
-    
+    <center>
 <button onclick="myFunction()">Jump</button>
 
 
@@ -417,11 +371,8 @@ div.fixed {
 
 <form id="myForm" action="/action_page.php">
   Second: <input type="text" name="fname"      value="{{video.starting_in_seconds   }}"><br>
-  yaw: <input type="text" name="fname"         value="{{video.yaw   }}"><br>
-  pitch: <input type="text" name="fname"       value="{{video.pitch }}"><br>
-  roll: <input type="text" name="fname"        value="{{video.roll  }}"><br>
-  fov: <input type="text" name="fname"         value="{{video.fov   }}"><br>
 </form> 
+<p></p>
 <a class="new btn btn-success" href="/video_init_from_srt/{{ video.id }}/">Init subtitles</a>   
 
 <p></p>
@@ -439,14 +390,9 @@ div.fixed {
     function myFunction() {
         var x = parseFloat(document.getElementById("myForm").elements.item(0).value);
         //  document.getElementById("demo").innerHTML = parseInt(x);
-        var sphericalProperties = {};
-        sphericalProperties['yaw'  ] = parseFloat(document.getElementById("myForm").elements.item(1).value);
-        sphericalProperties['pitch'] = parseFloat(document.getElementById("myForm").elements.item(2).value);
-        sphericalProperties['roll' ] = parseFloat(document.getElementById("myForm").elements.item(3).value);
-        sphericalProperties['fov'  ] = parseFloat(document.getElementById("myForm").elements.item(4).value);
-        //player.seekTo(x);
-        player.playVideo();
-        player.setSphericalProperties(sphericalProperties);
+        jump_to(x);
+		set_focus_to_current_time(x);
+        
     }
     </script>
      
@@ -473,6 +419,8 @@ div.fixed {
       <button class="new btn btn-danger" href="/video_delete_all_subtitles/{{video.id}}/">
                     Delete All Subtitles
                 </button>
+				</center>
+				</div>
         {% endif %}
 
 {% endblock %}
