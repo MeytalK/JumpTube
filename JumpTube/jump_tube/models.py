@@ -135,6 +135,8 @@ class Video(models.Model):
     pitch               = models.FloatField(default   = 0.0  )
     roll                = models.FloatField(default   = 0.0  )
     fov                 = models.FloatField(default   = 120.0)
+    latitude            = models.FloatField(default   = 0.0  )
+    longitude           = models.FloatField(default   = 0.0  )
     language_identifier = models.CharField( default = u'iw',max_length = 100)
     youtube_channel     = models.ForeignKey(YouTubeChannel, on_delete = models.SET_NULL, null=True, blank=True)
     category            = models.ForeignKey(Category, on_delete = models.SET_NULL, null=True, blank=True)
@@ -164,6 +166,8 @@ class SubTitle(models.Model):
     pitch              = models.FloatField(default   = 0.0  )
     roll               = models.FloatField(default   = 0.0  )
     fov                = models.FloatField(default   = 120.0  )
+    latitude           = models.FloatField(default   = 0.0  )
+    longitude          = models.FloatField(default   = 0.0  )
     def __str__(self):
         return str(self.index) + ' ' + self.text
 

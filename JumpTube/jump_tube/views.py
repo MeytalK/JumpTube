@@ -35,8 +35,8 @@ def home(request):
 
 @login_required
 def video_list(request):
-    #video_list = get_all_allowed_videos( request.user.id)
-    video_list = Video.objects.all().order_by('-id') #for performance reason
+    video_list = get_all_allowed_videos( request.user.id)
+    #video_list = Video.objects.all().order_by('-id') #for performance reason
     return render(
         request,
         #'jump_tube/index.html',
@@ -168,22 +168,25 @@ def jump(request):
     print( 'request.GET', request.GET.get('from_youtube'))
     if request.GET.get('v'):
         url_query = "https://www.youtube.com/watch?v=" + request.GET.get('v')
-        print('resolved', url_query)
+        #print('resolved', url_query)
     else:
         url_query = request.GET.get('from_youtube')
 
     
    
     #url_query  = request.GET.get('from_youtube')
-    #video = Video.objects.get_or_create( url = url_query)[0]
+    video = Video.objects.get_or_create( url = url_query, owner=request.user)[0]
+    if video.subtitle_set.count() != 0:
+        return HttpResponseRedirect(reverse('video_play', args=(video.id,)))
 
 
-    video = Video.objects.create( url = url_query)
+
+    #video = Video.objects.create( url = url_query)
     video.owner = request.user
     video.save()
     lang  = request.GET.get('lang')
 
-    print( 'request.GET', request.GET)
+    #print( 'request.GET', request.GET)
     
 
     #if lang:

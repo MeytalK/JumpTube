@@ -506,10 +506,12 @@ def video_is_user_allowed_to_watch( video_instance_id = None, user_instance_id =
             user = User.objects.get(id=user_instance_id)
         except User.DoesNotExist:
             return False
-        if video.is_private == False:
+        if video.category != None:
             return True
-        if video.owner == None:
-            return True
+        #if video.is_private == False:
+        #    return True
+        #if video.owner == None:
+        #    return True
         if user == video.owner:
             return True
         if user.is_staff:
