@@ -1,0 +1,66 @@
+!youtube-dl.exe
+#visual studio
+.vs/
+*.sln
+#ignore thumbnails created by windows
+Thumbs.db
+*.mp4
+*.MP4
+*.exe
+*.webm
+*.WEBM
+*.m4a
+*.M4A
+#ignore by django
+*.sqlite3
+*.log
+*.pot
+*.mkv
+*.MKV
+*.part
+*.PART
+*.ytdl
+*.YTDL
+*.webcam
+*.srt
+*.SRT
+local_settings.py
+db.sqlite3
+migrations/
+media/
+uploads/
+#ignore thumbnails created by windows
+Thumbs.db
+#ignore python
+*.pyc
+*.PYC
+.project
+.pydevproject
+desktop.ini
+#Ignore files build by Visual Studio
+*.user
+*.aps
+*.pch
+*.vspscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.bak
+*.cache
+*.ilk
+*.log
+[Bb]in
+[Dd]ebug*/
+*.sbr
+obj/
+[Rr]elease*/
+_ReSharper*/
+.vs/
+jump_tube/__pycache_
+JumpTube/db.sqlite3
+JumpTube/.vs/JumpTube/v16/.suo
+JumpTube/.vs/JumpTube/v16/.suo
+.vs/JumpTube/v16/.suo
+
+JumpTube/.vs/JumpTube/v16/.suo
